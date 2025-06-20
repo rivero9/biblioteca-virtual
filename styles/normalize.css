@@ -1,0 +1,630 @@
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+
+/* Document
+   ========================================================================== */
+
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+
+html {
+  line-height: 1.15; /* 1 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+}
+
+/* Sections
+     ========================================================================== */
+
+/**
+   * Remove the margin in all browsers.
+   */
+
+body {
+  margin: 0;
+}
+
+/**
+   * Render the `main` element consistently in IE.
+   */
+
+main {
+  display: block;
+}
+
+/**
+   * Correct the font size and margin on `h1` elements within `section` and
+   * `article` contexts in Chrome, Firefox, and Safari.
+   */
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+     ========================================================================== */
+
+/**
+   * 1. Add the correct box sizing in Firefox.
+   * 2. Show the overflow in Edge and IE.
+   */
+
+hr {
+  box-sizing: content-box; /* 1 */
+  height: 0; /* 1 */
+  overflow: visible; /* 2 */
+}
+
+/**
+   * 1. Correct the inheritance and scaling of font size in all browsers.
+   * 2. Correct the odd `em` font sizing in all browsers.
+   */
+
+pre {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/* Text-level semantics
+     ========================================================================== */
+
+/**
+   * Remove the gray background on active links in IE 10.
+   */
+
+a {
+  background-color: transparent;
+}
+
+/**
+   * 1. Remove the bottom border in Chrome 57-
+   * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+   */
+
+abbr[title] {
+  border-bottom: none; /* 1 */
+  text-decoration: underline; /* 2 */
+  text-decoration: underline dotted; /* 2 */
+}
+
+/**
+   * Add the correct font weight in Chrome, Edge, and Safari.
+   */
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+   * 1. Correct the inheritance and scaling of font size in all browsers.
+   * 2. Correct the odd `em` font sizing in all browsers.
+   */
+
+code,
+kbd,
+samp {
+  font-family: monospace, monospace; /* 1 */
+  font-size: 1em; /* 2 */
+}
+
+/**
+   * Add the correct font size in all browsers.
+   */
+
+small {
+  font-size: 80%;
+}
+
+/**
+   * Prevent `sub` and `sup` elements from affecting the line height in
+   * all browsers.
+   */
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+     ========================================================================== */
+
+/**
+   * Remove the border on images inside links in IE 10.
+   */
+
+img {
+  border-style: none;
+}
+
+/* Forms
+     ========================================================================== */
+
+/**
+   * 1. Change the font styles in all browsers.
+   * 2. Remove the margin in Firefox and Safari.
+   */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit; /* 1 */
+  font-size: 100%; /* 1 */
+  line-height: 1.15; /* 1 */
+  margin: 0; /* 2 */
+}
+
+/**
+   * Show the overflow in IE.
+   * 1. Show the overflow in Edge.
+   */
+
+button,
+input {
+  /* 1 */
+  overflow: visible;
+}
+
+/**
+   * Remove the inheritance of text transform in Edge, Firefox, and IE.
+   * 1. Remove the inheritance of text transform in Firefox.
+   */
+
+button,
+select {
+  /* 1 */
+  text-transform: none;
+}
+
+/**
+   * Correct the inability to style clickable types in iOS and Safari.
+   */
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/**
+   * Remove the inner border and padding in Firefox.
+   */
+
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+   * Restore the focus styles unset by the previous rule.
+   */
+
+button:-moz-focusring,
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+   * Correct the padding in Firefox.
+   */
+
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+   * 1. Correct the text wrapping in Edge and IE.
+   * 2. Correct the color inheritance from `fieldset` elements in IE.
+   * 3. Remove the padding so developers are not caught out when they zero out
+   *    `fieldset` elements in all browsers.
+   */
+
+legend {
+  box-sizing: border-box; /* 1 */
+  color: inherit; /* 2 */
+  display: table; /* 1 */
+  max-width: 100%; /* 1 */
+  padding: 0; /* 3 */
+  white-space: normal; /* 1 */
+}
+
+/**
+   * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+   */
+
+progress {
+  vertical-align: baseline;
+}
+
+/**
+   * Remove the default vertical scrollbar in IE 10+.
+   */
+
+textarea {
+  overflow: auto;
+}
+
+/**
+   * 1. Add the correct box sizing in IE 10.
+   * 2. Remove the padding in IE 10.
+   */
+
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+   * Correct the cursor style of increment and decrement buttons in Chrome.
+   */
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+   * 1. Correct the odd appearance in Chrome and Safari.
+   * 2. Correct the outline style in Safari.
+   */
+
+[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  outline-offset: -2px; /* 2 */
+}
+
+/**
+   * Remove the inner padding in Chrome and Safari on macOS.
+   */
+
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+   * 1. Correct the inability to style clickable types in iOS and Safari.
+   * 2. Change font properties to `inherit` in Safari.
+   */
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button; /* 1 */
+  font: inherit; /* 2 */
+}
+
+/* Interactive
+     ========================================================================== */
+
+/*
+   * Add the correct display in Edge, IE 10+, and Firefox.
+   */
+
+details {
+  display: block;
+}
+
+/*
+   * Add the correct display in all browsers.
+   */
+
+summary {
+  display: list-item;
+}
+
+/* Misc
+     ========================================================================== */
+
+/**
+   * Add the correct display in IE 10+.
+   */
+
+template {
+  display: none;
+}
+
+/**
+   * Add the correct display in IE 10.
+   */
+
+[hidden] {
+  display: none;
+}
+
+/* user edit */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Definición de las variables CSS para los colores principales de la paleta */
+:root {
+  --color-primary-dark: #2a5a8e; /* Azul oscuro principal - UPT Aragua */
+  --color-accent-green: #1abc9c; /* Verde acento - Para resaltar acciones */
+  --color-white: #fff; /* Blanco puro - Para fondos y texto claro */
+  --color-background-light: #eee; /* Gris muy claro - Fondo general de la página */
+  --color-text: #111827;
+
+  /* Colores adicionales para detalles y sombreados */
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-indigo-700: #4338ca;
+  --color-indigo-800: #3730a3;
+  --color-indigo-900: #312e81;
+  --color-green-700: #15803d;
+  --color-purple-600: #9333ea;
+  --color-purple-700: #7e22ce;
+  --color-gray-50: #f9fafb;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-text: #111827;
+}
+
+/* Estilos globales para el body de la aplicación */
+.app-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--color-background-light);
+  line-height: 1.5;
+  color: var(--color-gray-800);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Contenedor principal para centrar el contenido */
+.main-content,
+.header-container,
+.footer-container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Estilos del encabezado de la aplicación */
+.app-header {
+  background-color: var(--color-primary-dark);
+  background-image: linear-gradient(
+    to right,
+    var(--color-primary-dark),
+    var(--color-indigo-700)
+  );
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+  padding: 1rem 1.5rem;
+  z-index: 1000;
+  position: relative;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem; /* space-y-4 */
+  height: 30px;
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .header-container {
+    flex-direction: row;
+    gap: 0; /* remove space-y for md */
+  }
+}
+
+.app-logo-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app-icon-book {
+  font-size: 2rem;
+  color: var(--color-white);
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .app-icon-book {
+    font-size: 2.5rem;
+  }
+}
+
+/* Estilos para los botones de autenticación */
+.auth-buttons-nav {
+  display: flex;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  /* md breakpoint */
+  .auth-buttons-nav {
+    gap: 1rem;
+  }
+}
+
+.btn-auth,
+header nav a {
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 300ms ease-in-out;
+  transform: scale(1);
+  border: none;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+}
+
+.btn-auth:hover {
+  transform: scale(1.05);
+}
+
+.btn-auth:focus {
+  box-shadow: 0 0 0 2px var(--color-primary-dark);
+}
+
+.btn-login {
+  background-color: var(--color-blue-600);
+}
+
+.btn-login:hover {
+  background-color: var(--color-blue-800);
+}
+
+.btn-register {
+  background-color: var(--color-accent-green);
+}
+
+.btn-register:hover {
+  background-color: var(--color-green-700);
+}
+
+section {
+  padding: 20px;
+}
+
+/* Estilos para el menú desplegable del usuario */
+.user-dropdown {
+  position: relative;
+  display: inline-block; /* Permite que el contenedor se ajuste al contenido */
+}
+
+.user-dropdown-trigger {
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  transition: all 180ms ease-in-out;
+  transform: scale(1);
+  border: none;
+  cursor: pointer;
+  outline: none;
+  display: flex; /* Para alinear icono y texto */
+  align-items: center;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+.user-dropdown-trigger:hover {
+  background-color: var(--color-blue-700);
+  transform: scale(1.05);
+}
+
+.user-dropdown-trigger .user-icon {
+  font-size: 1.1rem;
+}
+
+.user-dropdown-trigger .arrow-icon {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+}
+
+.user-dropdown-trigger.active .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  display: none; /* Oculto por defecto */
+  position: absolute;
+  background-color: var(--color-white);
+  min-width: 160px;
+  width: 110%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0;
+  top: calc(100% + 0.5rem); /* Debajo del botón */
+  right: 0; /* Alineado a la derecha del botón */
+  list-style: none; /* Quita los puntos de la lista */
+  margin: 0;
+}
+
+.dropdown-menu.active {
+  display: block; /* Muestra el menú cuando está activo */
+}
+
+.dropdown-menu-item {
+  color: var(--color-gray-800);
+  padding: 10px 15px;
+  text-decoration: none;
+  display: block;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-menu-item:hover {
+  background-color: var(--color-gray-100);
+  color: var(--color-primary-dark);
+}
+
+.dropdown-menu-item.user-info {
+  font-weight: 600;
+  color: var(--color-primary-dark);
+  cursor: default; /* No es un enlace clicable si solo muestra info */
+  border-bottom: 1px solid var(--color-gray-200);
+  margin-bottom: 0.5rem;
+}
+
+.dropdown-menu-item.user-info:hover {
+  background-color: transparent; /* No cambia de color al pasar el mouse */
+}
+
+.dropdown-separator {
+  height: 1px;
+  background-color: var(--color-gray-200);
+  margin: 0.5rem 0;
+}
+
+/* Estilos para el pie de página */
+.app-footer {
+  background-color: var(--color-gray-800);
+  color: var(--color-white);
+  padding: 1.5rem 2rem;
+  margin-top: 2rem;
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.footer-container {
+  text-align: center;
+}
+
+.footer-text {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.footer-subtext {
+  font-size: 0.75rem;
+  color: var(--color-gray-400);
+}
