@@ -356,15 +356,16 @@ template {
 /* user edit */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-/* Definición de las variables CSS para los colores principales de la paleta */
 :root {
   --color-primary-dark: #2a5a8e; /* Azul oscuro principal - UPT Aragua */
   --color-accent-green: #1abc9c; /* Verde acento - Para resaltar acciones */
   --color-white: #fff; /* Blanco puro - Para fondos y texto claro */
   --color-background-light: #eee; /* Gris muy claro - Fondo general de la página */
-  --color-text: #111827;
+  --color-text: #111827; /* Definido dos veces, puedes mantenerlo una vez al final o aquí */
+
 
   /* Colores adicionales para detalles y sombreados */
+  --color-blue-500: #3B82F6;
   --color-blue-600: #2563eb;
   --color-blue-700: #1d4ed8;
   --color-blue-800: #1e40af;
@@ -372,7 +373,12 @@ template {
   --color-indigo-700: #4338ca;
   --color-indigo-800: #3730a3;
   --color-indigo-900: #312e81;
+
+  --color-green-500: #2ECC71;
+  --color-green-600: #1abc9c; /* ¡CORREGIDA Y AÑADIDA! Igual que --color-accent-green */
   --color-green-700: #15803d;
+  --color-green-800: #106631; /* ¡AÑADIDA! Un tono más oscuro para el efecto 'active' */
+
   --color-purple-600: #9333ea;
   --color-purple-700: #7e22ce;
   --color-gray-50: #f9fafb;
@@ -382,10 +388,16 @@ template {
   --color-gray-600: #4b5563;
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
-  --color-text: #111827;
+
+  /* Variables para las sombras de los botones */
+  --shadow-btn-initial: 0 10px 25px rgba(0, 0, 0, 0.2);
+  --shadow-btn-hover: 0 15px 30px rgba(0, 0, 0, 0.3);
+  --shadow-btn-active: 0 4px 10px rgba(0, 0, 0, 0.15);
+  --shadow-sm-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
 }
 
-/* Estilos globales para el body de la aplicación */
+/*Estilos globales para el body de la aplicación */
 .app-body {
   display: flex;
   flex-direction: column;
@@ -456,58 +468,105 @@ template {
   }
 }
 
-/* Estilos para los botones de autenticación */
+/* Estilo base para todos los botones de autenticación */
 .auth-buttons-nav {
+  gap: 15px;
   display: flex;
-  gap: 0.75rem;
 }
 
-@media (min-width: 768px) {
-  /* md breakpoint */
-  .auth-buttons-nav {
-    gap: 1rem;
-  }
-}
-
-.btn-auth,
-header nav a {
+.btn-auth {
   color: var(--color-white);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  transition: all 300ms ease-in-out;
-  transform: scale(1);
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateY(0);
   border: none;
   cursor: pointer;
   outline: none;
-  text-decoration: none;
+  text-decoration: none; /* Para si se usa en <a> */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-auth:hover {
-  transform: scale(1.05);
+  transform: translateY(-2px) scale(1.01);
+}
+
+.btn-auth:active {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: var(--shadow-btn-active);
 }
 
 .btn-auth:focus {
-  box-shadow: 0 0 0 2px var(--color-primary-dark);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
 }
 
+/* Estilo específico para botón de Login (azul) */
 .btn-login {
-  background-color: var(--color-blue-600);
+  background: linear-gradient(
+    145deg,
+    var(--color-blue-500) 0%,
+    var(--color-blue-600) 100%
+  );
+  box-shadow: var(--shadow-btn-initial);
 }
 
 .btn-login:hover {
-  background-color: var(--color-blue-800);
+  background: linear-gradient(
+    145deg,
+    var(--color-blue-600) 0%,
+    var(--color-blue-700) 100%
+  );
+  box-shadow: var(--shadow-btn-hover);
 }
 
+/* Estilo específico para botón de Registro (verde) */
 .btn-register {
-  background-color: var(--color-accent-green);
+  background: linear-gradient(
+    145deg,
+    var(--color-green-500) 0%,
+    var(--color-green-600) 100%
+  );
+  box-shadow: var(--shadow-btn-initial);
 }
 
 .btn-register:hover {
-  background-color: var(--color-green-700);
+  background: linear-gradient(
+    145deg,
+    var(--color-green-600) 0%,
+    var(--color-green-700) 100%
+  );
+  box-shadow: var(--shadow-btn-hover);
 }
 
+/* Estilo para botones de navegación en el header (el "Iniciar Sesión" y "Registrarse" en la barra superior) */
+header nav a {
+  padding: 13px 5px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+header nav a.btn-register {
+  background-color: var(--color-accent-green);
+  color: var(--color-white);
+  box-shadow: var(--shadow-sm-light);
+}
+
+header nav a.btn-register:hover {
+  background-color: var(--color-green-700);
+  border-color: var(--color-green-700);
+  box-shadow: var(--shadow-md-subtle);
+}
+
+header nav a.btn-register:active {
+  background-color: var(--color-green-800);
+  transform: translateY(0);
+}
+
+/* ----- */
 section {
   padding: 20px;
 }

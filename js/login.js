@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 const url = "process/login.php";
 let form = document.getElementById("form");
 let inputsErr = document.getElementsByClassName("input-error");
