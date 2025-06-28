@@ -55,9 +55,10 @@
 
     <div class="container">
         <div class="login-container">
-            <div class="info-section">
+            <div class="info-section">        
+                <span class="ico"><i class="fas fa-book-open"></i></span>
                 <h1>Rápido, Eficiente y Productivo</h1>
-                <p>¡Bienvenido de nuevo! Inicia sesión para acceder a tu cuenta y continuar tu viaje con nosotros. Gestiona tus proyectos, colabora con tu equipo y mantente organizado.</p>
+                <p>¡Bienvenido de nuevo! Inicia sesión para continuar tu acceso a la Biblioteca Virtual. Tus recursos te esperan, listos para tu estudio y consulta.</p>
             </div>
             <div class="form-section">
                 <h2>Iniciar Sesión</h2>
@@ -81,22 +82,21 @@
                 <form action="" method="POST" autocomplete="off" id="form">
                     <div class="form-group">
                         <label for="email">Correo Electrónico</label>
-                        <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" class="input" email>
+                        <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" class="input" require>
                         <span id="errEmail" class="input-error"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group password-field-wrapper">
                         <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" class="input" email>
+                        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" class="input" require>
+                        <span class="toggle-password" id="togglePassword">
+                            <i class="fas fa-eye"></i>
+                        </span>
                         <span id="errPass" class="input-error"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
                     <span id="errMain" class="input-error"></span>
                     <p class="signup-link">
-                        ¿Olvidaste tu contraseña? <a href="registro.php">Recuperar</a>
-                    </p>
-                    <p class="signup-link" style>- o -</p>
-                    <p class="signup-link">
-                        ¿No tienes cuenta? <a href="registro.php">Registrarme</a>
+                        ¿Olvidaste tu contraseña? <a href="recuperar_contraseña.php">Recuperar</a>
                     </p>
                 </form>
             </div>
@@ -105,6 +105,10 @@
 
     <!-- footer -->
     <?php include __DIR__ . "/includes/footer.php" ?>
+    <!-- Loader -->
+    <div id="loader-overlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
 </body>
 
 </html>

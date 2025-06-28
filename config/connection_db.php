@@ -1,11 +1,10 @@
 <?php
 
-// database
-
-define("host","localhost");
-define("db","databases");
-define("user","root");
-define("pass","");
+// database config
+define('host', getenv('DB_SERVER'));
+define('user', getenv('DB_USERNAME'));
+define('pass', getenv('DB_PASSWORD'));
+define('db', getenv('DB_NAME'));
 
 class Database {
 

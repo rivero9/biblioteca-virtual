@@ -1,3 +1,8 @@
+<?php
+
+require __DIR__ . "/config/init.php";
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

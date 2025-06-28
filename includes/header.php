@@ -8,7 +8,6 @@
         <nav class="auth-buttons-nav">
             <a href="#">Libros</a>
             <?php
-            session_start();
             if (isset($_SESSION['user_id'])) {
             ?>
                 <!-- Menú Desplegable de Usuario -->

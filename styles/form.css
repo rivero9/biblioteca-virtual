@@ -1,256 +1,373 @@
 :root {
-
-    /* Nuevas variables para colores específicos no directamente en la paleta, para mantener legibilidad */
-    --color-soft-blue-bg: #E9EFFC;   /* Fondo azul suave para el body */
-    --color-light-blue-gradient-end: #DDE8FF; /* Final del gradiente de fondo de formas */
-    --color-error-red: #e74c3c;      /* Color para mensajes de error */
+  /* Nuevas variables para colores específicos no directamente en la paleta, para mantener legibilidad */
+  --color-soft-blue-bg: #e9effc; /* Fondo azul suave para el body */
+  --color-light-blue-gradient-end: #dde8ff; /* Final del gradiente de fondo de formas */
+  --color-error-red: #e74c3c; /* Color para mensajes de error */
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--color-soft-blue-bg); /* Usando variable para el fondo azul suave */
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    box-sizing: border-box;
-    position: relative;
-    overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+  background-color: var(
+    --color-soft-blue-bg
+  ); /* Usando variable para el fondo azul suave */
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* Formas de fondo decorativas simples */
 .login-container::before {
-    content: '';
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0.5;
-    z-index: -1;
-    filter: blur(70px);
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.5;
+  z-index: -1;
+  filter: blur(70px);
 }
 
-.login-container::before { /* Forma superior izquierda */
-    width: 450px;
-    height: 450px;
-    /* Usando variables para el gradiente. Ajustado a la paleta existente o similar */
-    background: linear-gradient(135deg, var(--color-blue-900), var(--color-light-blue-gradient-end));
-    top: -120px;
-    left: -180px;
+.login-container::before {
+  /* Forma superior izquierda */
+  width: 450px;
+  height: 450px;
+  /* Usando variables para el gradiente. Ajustado a la paleta existente o similar */
+  background: linear-gradient(
+    135deg,
+    var(--color-blue-900),
+    var(--color-light-blue-gradient-end)
+  );
+  top: -120px;
+  left: -180px;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    padding: 100px 20px;
+  display: flex;
+  justify-content: center;
+  padding: 100px 20px;
 }
 
 .login-container {
-    background-color: var(--color-white); /* Usando variable */
-    border-radius: 25px;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
-    display: flex;
-    max-width: 950px;
-    width: 100%;
-    overflow: hidden;
-    z-index: 1;
+  background-color: var(--color-white);
+  border-radius: 25px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+  display: flex;
+  max-width: 950px;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
 }
 
 .info-section {
-    background-color: var(--color-gray-50); /* Usando variable para el panel izquierdo */
-    padding: 60px 45px;
-    color: var(--color-gray-700); /* Usando variable */
-    flex-basis: 45%;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
+  background-color: var(
+    --color-gray-50
+  ); /* Usando variable para el panel izquierdo */
+  padding: 60px 45px;
+  color: var(--color-gray-700);
+  flex-basis: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+}
+
+.info-section .ico {
+  font-size: 70px;
+  color: var(--color-indigo-900);
+  margin: 0 auto;
 }
 
 .info-section h1 {
-    font-size: 30px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: var(--color-blue-900); /* Usando variable */
-    line-height: 1.3;
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--color-blue-900);
+  line-height: 1.3;
 }
 
 .info-section p {
-    font-size: 14px;
-    line-height: 1.7;
-    margin-bottom: 35px;
-    color: var(--color-gray-600); /* Usando variable */
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 35px;
+  color: var(--color-gray-600);
+}
+
+/* --- ESTILOS PARA LA LISTA DE BENEFICIOS --- */
+.benefits-list {
+  list-style: none; /* Elimina los puntos predeterminados de la lista */
+  padding: 0;
+  margin-top: 25px; /* Margen superior para separarlo del párrafo */
+  width: 100%; /* Asegura que la lista ocupe todo el ancho disponible del contenedor padre */
+  max-width: 300px; /* Limita el ancho para que no se extienda demasiado en pantallas grandes */
+  text-align: left; /* Alinea los ítems de la lista a la izquierda */
+}
+
+.benefits-list li {
+  display: flex; /* Para alinear el icono y el texto en una fila */
+  align-items: center; /* Alineación vertical de los ítems */
+  margin-bottom: 30px; /* Espaciado entre cada ítem de la lista */
+  font-size: 14px;
+  color: var(--color-gray-700);
+  line-height: 1.4;
+}
+
+.benefits-list li i {
+  font-size: 1.2em; /* Tamaño del icono de Font Awesome */
+  color: var(
+    --color-accent-green
+  ); /* Utiliza tu color de acento para los iconos */
+  margin-right: 10px; /* Espacio entre el icono y el texto */
+  min-width: 25px; /* Asegura que los iconos tengan un ancho mínimo para una mejor alineación si varían */
+  text-align: center; /* Centra el icono dentro de su min-width */
 }
 
 .form-section {
-    padding: 50px 55px;
-    flex-basis: 55%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    z-index: 100;
-    background: var(--color-white);
+  padding: 50px 55px;
+  flex-basis: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 100;
+  background: var(--color-white);
 }
 
 .form-section h2 {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: var(--color-blue-900); /* Usando variable */
-    text-align: left;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--color-blue-900);
+  text-align: left;
 }
 
 .form-section .subtitle {
-    font-size: 14px;
-    color: var(--color-gray-600); /* Usando variable */
-    margin-bottom: 35px;
-    text-align: left;
+  font-size: 14px;
+  color: var(--color-gray-600);
+  margin-bottom: 35px;
+  text-align: left;
 }
 
 .form-group {
-    margin-bottom: 22px;
-    text-align: left;
+  margin-bottom: 22px;
+  text-align: left;
 }
 
 .form-group label {
-    display: block;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: var(--color-gray-700); /* Usando variable */
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--color-gray-700);
 }
 
 .form-group .input {
-    width: 100%;
-    padding: 14px 18px;
-    border: 1px solid var(--color-gray-300); /* Usando variable */
-    border-radius: 10px;
-    font-size: 14px;
-    box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    background-color: var(--color-gray-50); /* Usando variable */
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  background-color: var(--color-gray-50);
 }
 
 .form-group .input:focus {
-    border-color: var(--color-blue-600); /* Usando variable */
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(var(--color-blue-600), 0.25); /* Usando variable con rgba */
+  border-color: var(--color-blue-600);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
 
 .form-section .input-error {
-    color: var(--color-error-red); /* Usando variable */
-    font-size: 13px;
+  color: var(--color-error-red);
+  font-size: 13px;
 }
 
 .password-options {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -12px;
-    margin-bottom: 25px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -12px;
+  margin-bottom: 25px;
 }
 
 .forgot-password {
-    font-size: 13px;
-    color: var(--color-blue-600); /* Usando variable */
-    text-decoration: none;
+  font-size: 13px;
+  color: var(--color-blue-600);
+  text-decoration: none;
 }
 
 .forgot-password:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+}
+
+/* Estilos para el contenedor del campo de contraseña y el botón de toggle */
+.password-field-wrapper {
+  position: relative; /* Esencial para posicionar el icono absoluto dentro de él */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 33px;
+  cursor: pointer;
+  color: var(--color-gray-600);
+  font-size: 1.1em;
+  z-index: 2;
+  padding: 5px;
+}
+
+.toggle-password:hover {
+  color: var(--color-primary-dark); /* Color al pasar el mouse */
+}
+
+/* Ajustes para el input para que no se superponga con el icono */
+.password-field-wrapper input.input {
+  padding-right: 45px; /* Deja espacio para el icono */
 }
 
 .btn {
-    display: block;
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 10px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
-    text-align: center;
-    text-decoration: none;
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  text-align: center;
+  text-decoration: none;
 }
 .btn:active {
-    transform: translateY(1px);
+  transform: translateY(1px);
 }
 
 .btn-primary {
-    background-color: var(--color-blue-600); /* Usando variable */
-    color: var(--color-white); /* Usando variable */
-    box-shadow: 0 4px 15px rgba(var(--color-blue-600), 0.3); /* Usando variable con rgba */
-    margin-bottom: 30px;
+  background-color: var(--color-blue-600);
+  color: var(--color-white);
+  box-shadow: 0 4px 15px rgba(var(--color-blue-600), 0.3); /* Usando variable con rgba */
+  margin-bottom: 10px;
 }
 
 .btn-primary:hover {
-    background-color: var(--color-blue-700); /* Usando variable */
+  background-color: var(--color-blue-700);
 }
 
 .signup-link {
-    text-align: center;
-    font-size: 14px;
-    color: var(--color-gray-600); /* Usando variable */
-    margin: 8px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-gray-600);
+  margin: 30px 0 0;
 }
 
 .signup-link a {
-    color: var(--color-blue-600); /* Usando variable */
-    font-weight: 500;
-    text-decoration: none;
+  color: var(--color-blue-600);
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .signup-link a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 /* Ajustes responsivos */
 @media (max-width: 860px) {
-    .login-container {
-        flex-direction: column;
-        max-width: 450px;
-    }
-    .info-section {
-        /* flex-basis: auto;
+  .login-container {
+    flex-direction: column;
+    max-width: 450px;
+  }
+  .info-section {
+    /* flex-basis: auto;
         padding: 40px 30px;
         text-align: center;
         border-bottom: 1px solid var(--color-gray-200); Usando variable */
-        display: none;
-    }
-    .info-section h1 {
-        font-size: 26px;
-    }
-    .info-section p {
-        font-size: 13px;
-        margin-bottom: 25px;
-    }
-    .info-footer {
-        justify-content: center;
-    }
-    .info-footer a { margin: 5px 10px;}
+    display: none;
+  }
+  .info-section h1 {
+    font-size: 26px;
+  }
+  .info-section p {
+    font-size: 13px;
+    margin-bottom: 25px;
+  }
+  .info-footer {
+    justify-content: center;
+  }
+  .info-footer a {
+    margin: 5px 10px;
+  }
 
-    .form-section {
-        flex-basis: auto;
-        padding: 40px 30px;
-    }
-    .form-section h2 {
-        font-size: 24px;
-        text-align:center;
-    }
-    .form-section .subtitle {
-        text-align:center;
-    }
+  .form-section {
+    flex-basis: auto;
+    padding: 40px 30px;
+  }
+  .form-section h2 {
+    font-size: 24px;
+    text-align: center;
+  }
+  .form-section .subtitle {
+    text-align: center;
+  }
 }
 @media (max-width: 480px) {
-    .login-container { border-radius: 15px;}
-    .info-section { padding: 30px 20px; }
-    .info-section h1 { font-size: 22px; }
-    .form-section { padding: 30px 20px; }
-    .form-section h2 { font-size: 20px; }
-    .form-group .input,
-    .btn {
-        padding: 12px 15px;
-        font-size: 14px;
-    }
-    /* .btn-social no está en el HTML proporcionado en esta parte, pero lo comento si existiera
-    .btn-social { padding: 10px; }
-    .btn-social img { width: 18px; margin-right: 8px;}
-    */
+  .login-container {
+    border-radius: 15px;
+  }
+  .info-section {
+    padding: 30px 20px;
+  }
+  .info-section h1 {
+    font-size: 22px;
+  }
+  .form-section {
+    padding: 30px 20px;
+  }
+  .form-section h2 {
+    font-size: 20px;
+  }
+  .form-group .input,
+  .btn {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+}
+
+
+
+/* -- Loader -- */
+/* Estilos para el Overlay del Loader */
+.loader-overlay {
+    position: fixed; /* Fijo en la ventana de visualización */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    display: flex; /* Para centrar el spinner */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Asegura que esté por encima de todo lo demás */
+    visibility: hidden; /* Oculto por defecto */
+    opacity: 0; /* Oculto por defecto */
+    transition: visibility 0s, opacity 0.3s linear; /* Transición suave */
+}
+
+.loader-overlay.active {
+    visibility: visible; /* Visible cuando está activo */
+    opacity: 1; /* Totalmente visible cuando está activo */
+}
+
+/* Estilos para el Spinner (animación de carga) */
+.loader-spinner {
+    border: 6px solid var(--color-gray-200); /* Color base del spinner */
+    border-top: 6px solid var(--color-blue-600); /* Color de la parte animada */
+    border-radius: 50%; /* Forma circular */
+    width: 50px; /* Tamaño del spinner */
+    height: 50px;
+    animation: spin 1s linear infinite; /* Animación de rotación */
+}
+
+/* Definición de la animación de giro */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

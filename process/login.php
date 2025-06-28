@@ -1,5 +1,6 @@
 <?php
 
+require "../config/init.php";
 require "../config/connection_db.php";
 
 // connect
@@ -46,7 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Si no hay errores, se puede proceder a iniciar sesion
     if (count($errs) == 0) {
 
-
         $sql = $con->prepare("SELECT id, nombre, clave FROM usuarios WHERE correo LIKE :email LIMIT 1");
         $sql->bindParam(':email', $_POST["email"], PDO::PARAM_STR);
         $sql->execute();
@@ -54,9 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && $user["clave"]) {
             if (password_verify($password, $user["clave"])) {
-                // iniciar sesion (guardar datos del usuario para el sitio)
-                session_start();
-
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['nombre'];
             } else array_push($errs, ["main", "Correo o contraseña incorrectos."]);

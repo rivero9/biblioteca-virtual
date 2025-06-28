@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . "/../vendor/autoload.php";
+require __DIR__ . "/../config/init.php";
 require __DIR__ . "/../config/connection_db.php";
 
 // libreria para validar el correo
@@ -15,19 +15,28 @@ $con = $db->connect();
 
 
 // funcions
-function validateEmailUser($emailUser, $con)
+function validateUserEmail($userEmail, $con)
 {
     $sql = $con->prepare("SELECT id FROM usuarios WHERE correo LIKE :email LIMIT 1");
-    $sql->bindParam(':email', $emailUser, PDO::PARAM_STR);
+    $sql->bindParam(':email', $userEmail, PDO::PARAM_STR);
 
     $sql->execute();
     return $sql->fetchColumn() > 0 ? true : false;
 }
 
-function validateTelUser($telUser, $con)
+function validateUserTel($userTel, $con)
 {
     $sql = $con->prepare("SELECT id FROM usuarios WHERE telefono = :tel LIMIT 1");
-    $sql->bindParam(':tel', $telUser, PDO::PARAM_STR);
+    $sql->bindParam(':tel', $userTel, PDO::PARAM_STR);
+
+    $sql->execute();
+    return $sql->fetchColumn() > 0 ? true : false;
+}
+
+function validateUserCedula($userCedula, $con)
+{
+    $sql = $con->prepare("SELECT id FROM usuarios WHERE cedula = :cedula LIMIT 1");
+    $sql->bindParam(':cedula', $userCedula, PDO::PARAM_STR);
 
     $sql->execute();
     return $sql->fetchColumn() > 0 ? true : false;
@@ -110,15 +119,21 @@ $disposableEmailDomains = loadDisposableEmailDomains($disposableDomainsFilePath)
 
 
 // Inicializar variables para almacenar los datos y los errores
-$name = $tel = $email = $password = "";
+$name = $tel = $email = $cedula = $pnf = $course = $password = "";
 $errs = [];
 
 // Procesar el formulario cuando se envía por POST
 header('Content-Type: application/json');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["name"];
+    $tel = $_POST["tel"];
+    $email = $_POST["email"];
+    $cedula = $_POST["cedula"];
+    $pnf = $_POST["pnf"];
+    $course = $_POST["trayecto"];
 
     // Validar Nombre
-    if (empty($_POST["name"])) {
+    if (empty($name)) {
         array_push($errs, ["name", "El nombre es obligatorio."]);
     } else {
         $name = limpiar_datos($_POST["name"]);
@@ -133,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Validar Teléfono
-    if (empty($_POST["tel"])) {
+    if (empty($tel)) {
         array_push($errs, ["tel", "El teléfono es obligatorio."]);
     } else {
         $tel = limpiar_datos($_POST["tel"]);
@@ -159,14 +174,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $tel = str_replace('++', '+', $tel); // Evita dobles + si se ingresa +58+58
 
             // Luego la validación de existencia en DB
-            if (validateTelUser($tel, $con)) {
-                array_push($errs, ["tel", "Ya existe una cuenta con ese teléfono, inténtalo con otro."]);
+            if (validateUserTel($tel, $con)) {
+                array_push($errs, ["tel", "Ya existe una cuenta con ese teléfono."]);
             }
         }
     }
 
     // Validar Correo
-    if (empty($_POST["email"])) {
+    if (empty($email)) {
         array_push($errs, ["email", "El correo electrónico es obligatorio."]);
     } else {
         $email = limpiar_datos($_POST["email"]);
@@ -192,10 +207,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 array_push($errs, ["email", "No se permiten correos electrónicos de dominios temporales/desechables."]);
             }
             // Validar si el correo ya existe en la base de datos
-            else if (validateEmailUser($email, $con)) {
+            else if (validateUserEmail($email, $con)) {
                 array_push($errs, ["email", "Ya existe una cuenta con ese correo, inténtalo con otro."]);
             }
         }
+    }
+
+    // --- Validaciones para Cédula ---
+    if (empty($cedula)) {
+        array_push($errs, ["cedula", "La cédula es obligatoria."]);
+    } else {
+        $email = limpiar_datos($_POST["cedula"]);
+
+        // Remover cualquier caracter no numérico (V-, E-, etc.) para almacenar solo los dígitos
+        $cedula_clean = preg_replace('/[^0-9]/', '', $cedula);
+        $cedula = $cedula_clean;
+
+        if (!is_numeric($cedula) || strlen($cedula) < 7 || strlen($cedula) > 10) {
+            array_push($errs, ["cedula", "Formato de cédula no válido. Debe contener solo números y entre 7 y 10 dígitos."]);
+        } 
+        else if (validateUserCedula($cedula, $con)) {
+            array_push($errs, ["cedula", "Ya existe una cuenta con esa cédula."]);    
+        }
+    }
+
+    // --- Validaciones para PNF (Carrera) ---
+    // Lista de PNFs permitidos (debe coincidir con los valores de tus <option> HTML)
+    $allowed_pnfs = ["Informatica", "Electronica", "Mecanica", "Administracion", "Contaduria"];
+    if (empty($pnf)) {
+        array_push($errs, ["pnf", "Selecciona tu PNF (Carrera)."]);
+    } else if (!in_array($pnf, $allowed_pnfs)) {
+        array_push($errs, ["pnf", "El PNF seleccionado no es válido."]);
+    }
+
+    // --- Validaciones para Trayecto ---
+    // Lista de Trayectos permitidos
+    $allowed_trayectos = ["1", "2", "3", "4"]; // Si usas "Trayecto I" como valor, cámbialos a esos strings
+    if (empty($course)) {
+        array_push($errs, ["trayecto", "Selecciona tu Trayecto."]);
+    } else if (!in_array($course, $allowed_trayectos)) {
+        array_push($errs, ["trayecto", "El Trayecto seleccionado no es válido."]);
     }
 
     // Inicializa password y passwordRepeat antes de los bloques de validación
@@ -241,15 +292,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
 
         $pass = password_hash($password, PASSWORD_DEFAULT);
-        $sql = $con->prepare("INSERT INTO usuarios (nombre, telefono, correo, clave, fecha_registro) VALUES (?,?,?,?,now())");
+        $sql = $con->prepare("INSERT INTO usuarios (nombre, telefono, correo, cedula, pnf, trayecto, clave, fecha_registro) VALUES (?,?,?,?,?,?,?,now())");
 
         // si hay un error al insertar en la tabla, enviar un mensaje de error
         // en caso de que todo salga bien, no enviar ningun mensaje dde error, el js lo tomara como registro exitoso
-        if (!$sql->execute([$name, $tel, $email, $pass])) array_push($errs, ["main", "EL registro no a sido completado debido a un error."]);
-            else $_SESSION['flash_message'] = "¡Registro exitoso!";
+        if (!$sql->execute([$name, $tel, $email, $cedula, $pnf, $course, $pass])) array_push($errs, ["main", "EL registro no a sido completado debido a un error."]);
+        else $_SESSION['flash_message'] = "¡Registro exitoso!";
 
         // Es una buena práctica limpiar los campos después de un registro exitoso
-        $name = $tel = $email = $password = "";
+        $name = $tel = $email = $cedula = $pnf = $course = $password = "";
     }
 }
 

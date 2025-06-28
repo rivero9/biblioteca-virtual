@@ -13,6 +13,8 @@
   min-height: min-content;
   background: url("../images/upta-fachada.jpg") no-repeat;
   background-size: cover;
+  margin: 0;
+  max-width: 100%;
 }
 .search-hero-section {
   border-radius: 0.75rem;

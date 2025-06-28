@@ -75,6 +75,9 @@ pre {
 
 a {
   background-color: transparent;
+  color: var(--color-blue-600);
+  font-weight: 500;
+  text-decoration: none;
 }
 
 /**
@@ -397,8 +400,7 @@ template {
 }
 
 /* Contenedor principal para centrar el contenido */
-.main-content,
-.header-container,
+.main-content > *,
 .footer-container {
   max-width: 1280px;
   margin-left: auto;
