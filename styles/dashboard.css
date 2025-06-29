@@ -209,7 +209,6 @@ body {
 .user-profile {
   display: flex;
   align-items: center;
-  cursor: pointer;
   position: relative;
   padding: 5px; /* Área de click generosa */
   border-radius: var(--border-radius-full);
@@ -223,12 +222,8 @@ body {
 }
 
 .user-profile-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--color-light-text); /* Placeholder */
-  object-fit: cover;
-  border: 2px solid var(--color-white); /* Borde blanco alrededor del avatar */
+  font-size: 30px;
+  color: var(--color-light-text);
 }
 
 .user-profile-name {
@@ -237,14 +232,6 @@ body {
   color: var(--color-dark-text);
   font-size: 15px;
   white-space: nowrap; /* Evita que el nombre se rompa */
-}
-
-.user-profile i {
-  /* Flecha para indicar dropdown */
-  margin-left: 8px;
-  font-size: 0.9em;
-  color: var(--color-light-text);
-  transition: transform 0.2s ease;
 }
 
 /* --- Contenido de las Secciones Dinámicas (.content-area) --- */
@@ -268,6 +255,26 @@ body {
   font-weight: 700;
   color: var(--color-dark-text);
   margin-bottom: 25px;
+}
+
+/* --- estructura para la seccion perfil */
+.profile-right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+@media screen and (min-width: 1524px) {
+  .content-area #profile .card-grid {
+    display: flex;
+  }
+  .profile-right-column {
+    flex-direction: row;
+  }
+  .profile-right-column .card {
+    height: min-content;
+  }
 }
 
 /* Estilos para las tarjetas de contenido (.card-grid y .card) */
@@ -297,22 +304,12 @@ body {
   font-size: 20px;
   font-weight: 600;
   color: var(--color-dark-text);
-  margin-bottom: 15px;
+  margin: 0;
 }
 
 .card p {
   color: var(--color-medium-text);
   line-height: 1.6;
-}
-
-.card .metric-value {
-  font-size: 32px;
-  font-weight: 700;
-  color: var(
-    --color-dark-text
-  ); /* Color de texto oscuro para valores principales */
-  margin-bottom: 5px;
-  white-space: nowrap; /* Evita que el número se rompa */
 }
 
 .card .metric-description {
@@ -397,6 +394,14 @@ body {
   border-color: var(--color-primary-blue);
   outline: none;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+#profile form .input-error {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--color-red);
+  display: inline-block;
+  margin-top: 5px;
 }
 
 /* Estilos para la tabla de historial de descargas */
@@ -603,4 +608,137 @@ body {
 .content-area {
     scrollbar-width: thin; /* 'auto' | 'thin' | 'none' */
     scrollbar-color: var(--color-primary-blue) var(--color-background-light); /* color_thumb color_track */
+}
+
+
+
+/* -- Loader -- */
+/* Estilos para el Overlay del Loader */
+.loader-overlay {
+  position: fixed; /* Fijo en la ventana de visualización */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+  display: flex; /* Para centrar el spinner */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Asegura que esté por encima de todo lo demás */
+  visibility: hidden; /* Oculto por defecto */
+  opacity: 0; /* Oculto por defecto */
+  transition: visibility 0s, opacity 0.3s linear; /* Transición suave */
+}
+
+.loader-overlay.active {
+  visibility: visible; /* Visible cuando está activo */
+  opacity: 1; /* Totalmente visible cuando está activo */
+}
+
+/* Estilos para el Spinner (animación de carga) */
+.loader-spinner {
+  border: 6px solid var(--color-gray-200); /* Color base del spinner */
+  border-top: 6px solid var(--color-blue-600); /* Color de la parte animada */
+  border-radius: 50%; /* Forma circular */
+  width: 50px; /* Tamaño del spinner */
+  height: 50px;
+  animation: spin 1s linear infinite; /* Animación de rotación */
+}
+
+/* Definición de la animación de giro */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+/* --- Estilos para Loader Overlay --- */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima de todo */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loader-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid var(--color-primary-blue); /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- Estilos para Modal de Mensajes (Reemplazo de alert()) --- */
+.message-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: none; /* Oculto por defecto */
+  justify-content: center;
+  align-items: center;
+  z-index: 1001; /* Por encima del loader */
+}
+
+.message-content {
+  background-color: var(--color-white);
+  padding: 25px 30px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-md);
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.message-content.success {
+  border: 2px solid var(--color-green);
+  color: var(--color-green);
+}
+
+.message-content.error {
+  border: 2px solid var(--color-red);
+  color: var(--color-red);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: var(--color-light-text);
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--color-dark-text);
+}
+
+/* Estilo para inputs con error (si implementas 'input-invalid') */
+.form-input.input-invalid {
+  border-color: var(--color-red) !important; /* !important para asegurar que sobrescriba el focus */
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
 }

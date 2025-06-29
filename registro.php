@@ -42,7 +42,7 @@ require __DIR__ . '/config/init.php';
                         <span id="errName" class="input-error"></span>
                     </div>
                     <div class="form-group">
-                        <label for="tel">Telefono</label>
+                        <label for="tel">Teléfono</label>
                         <input type="tel" id="tel" name="tel" placeholder="Ej: 0412-1234567" class="input" required>
                         <span id="errTel" class="input-error"></span>
                     </div>

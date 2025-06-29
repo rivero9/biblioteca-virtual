@@ -62,7 +62,7 @@ require __DIR__ . '/config/init.php';
                     unset($_SESSION['flash_message']); // Elimina el mensaje después de mostrarlo
                 }
                 ?>
-                <form action="" method="POST" autocomplete="off" id="form">
+                <form action="" method="POST" id="form">
                     <div class="form-group">
                         <label for="email">Correo Electrónico</label>
                         <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" class="input" require>

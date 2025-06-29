@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // verificar inicio de sesion
 require __DIR__ . "/config/init.php";
@@ -10,16 +10,38 @@ $con = $db->connect();
 
 require __DIR__ . "/process/auth_check.php";
 
+$user_name = $currentUser['nombre'];
 $user_cedula = $currentUser['cedula'];
 $user_email = $currentUser['correo'];
-$user_phone = $currentUser['telefono'];
+$user_tel = $currentUser['telefono'];
 $user_pnf = $currentUser['pnf'];
 $user_course = $currentUser['trayecto'];
 
+// --- Validar que el pnf en la DB sea válido
+$validPnf = false;
+
+switch ($user_course) {
+    case 'Informatica':
+        $validPnf = true;
+        break;
+    case 'Electronica':
+        $validCourse = true;
+        break;
+    case 'Mecanica':
+        $validPnf = true;
+        break;
+    case 'Administracion':
+        $validPnf = true;
+        break;
+    case 'Contaduria':
+        $validPnf = true;
+        break;
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,6 +51,7 @@ $user_course = $currentUser['trayecto'];
     <link rel="stylesheet" href="styles/dashboard.css">
     <script src="js/dashboard.js" defer></script>
 </head>
+
 <body class="app-body">
     <div class="dashboard-container">
         <!-- Barra Lateral (Sidebar) -->
@@ -67,13 +90,11 @@ $user_course = $currentUser['trayecto'];
                 <div class="navbar-right">
                     <div class="navbar-icon-group">
                         <i class="fas fa-bell navbar-icon"></i>
-                        <i class="fas fa-cog navbar-icon"></i>
                         <i class="fas fa-question-circle navbar-icon"></i>
                     </div>
                     <div class="user-profile">
-                        <img src="https://placehold.co/40x40/CFE8FD/3B82F6?text=U" alt="Avatar de Usuario" class="user-profile-avatar">
-                        <span class="user-profile-name">Usuario UPTA</span>
-                        <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-user-circle user-icon user-profile-avatar"></i>
+                        <span class="user-profile-name"><?php echo $user_name ?></span>
                     </div>
                 </div>
             </header>
@@ -101,7 +122,6 @@ $user_course = $currentUser['trayecto'];
                                 <img src="https://placehold.co/300x150/F4F7FC/4B5563?text=Portada+Libro+1" alt="Portada de libro 1">
                             </div>
                             <p style="color: var(--color-medium-text); margin-bottom: 5px;">Introducción a Python</p>
-                            <div class="metric-value" style="font-size: 24px; color: var(--color-primary-blue);">$29.99</div> <!-- Mantener formato de la imagen -->
                             <a href="#" class="button">Ver Libro</a>
                         </div>
                         <div class="card">
@@ -110,7 +130,6 @@ $user_course = $currentUser['trayecto'];
                                 <img src="https://placehold.co/300x150/F4F7FC/4B5563?text=Portada+Libro+2" alt="Portada de libro 2">
                             </div>
                             <p style="color: var(--color-medium-text); margin-bottom: 5px;">Física Cuántica</p>
-                            <div class="metric-value" style="font-size: 24px; color: var(--color-primary-blue);">$45.00</div> <!-- Mantener formato de la imagen -->
                             <a href="#" class="button">Descargar Ahora</a>
                         </div>
                     </div>
@@ -122,62 +141,78 @@ $user_course = $currentUser['trayecto'];
                         <div class="card">
                             <h3>Datos Personales</h3>
                             <p>Actualiza tu información personal para mantener tu cuenta al día.</p>
-                            <div style="margin-top: 20px;">
+                            <form action="update.php" id="user-data" style="margin-top: 20px;">
                                 <div style="margin-bottom: 15px;">
                                     <label for="profile-name" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Nombre y Apellido</label>
-                                    <input type="text" id="profile-name" class="form-input" value="Juan Pérez">
+                                    <input type="text" name="name" id="profile-name" class="form-input" value="<?php echo $user_name; ?>">
+                                    <span class="input-error" id="errName"></span>
+                                </div>
+                                <div style="margin-bottom: 15px;">
+                                    <label for="profile-tel" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Teléfono</label>
+                                    <input type="text" name="tel" id="profile-tel" class="form-input" value="<?php echo $user_tel; ?>">
+                                    <span class="input-error" id="errTel"></span>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <label for="profile-email" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Correo Electrónico</label>
-                                    <input type="email" id="profile-email" class="form-input" value="juan.perez@upta.edu.ve">
+                                    <input type="email" name="email" id="profile-email" class="form-input" value="<?php echo $user_email; ?>">
+                                    <span class="input-error" id="errEmail"></span>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <label for="profile-cedula" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Cédula</label>
-                                    <input type="text" id="profile-cedula" class="form-input" value="V-12.345.678">
+                                    <input type="text" name="cedula" id="profile-cedula" class="form-input" value="<?php echo $user_cedula; ?>">
+                                    <span class="input-error" id="errCedula"></span>
                                 </div>
                                 <div style="margin-bottom: 15px;">
                                     <label for="profile-pnf" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">PNF (Carrera)</label>
-                                    <select id="profile-pnf" class="form-input">
-                                        <option value="Informatica" selected>Informática</option>
-                                        <option value="Electronica">Electrónica</option>
+                                    <select name="pnf" id="profile-pnf" class="form-input">
+                                        <?php if (!$validPnf) echo '<option value="" selected disabled>Selecciona tu PNF</option>'; ?>
+                                        <option value="Informatica" <?php if ($user_pnf == "Informatica") echo "selected"; ?>>Informática</option>
+                                        <option value="Electronica" <?php if ($user_pnf == "Electronica") echo "selected"; ?>>Electrónica</option>
+                                        <option value="Mecanica" <?php if ($user_pnf == "Mecanica") echo "selected"; ?>>Mecánica</option>
+                                        <option value="Administracion" <?php if ($user_pnf == "Administracion") echo "selected"; ?>>Administración</option>
+                                        <option value="Contaduria" <?php if ($user_pnf == "Contaduria") echo "selected"; ?>>Contaduría Pública</option>
                                     </select>
+                                    <span class="input-error" id="errPnf"></span>
                                 </div>
                                 <div style="margin-bottom: 20px;">
                                     <label for="profile-trayecto" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Trayecto</label>
-                                    <select id="profile-trayecto" class="form-input">
-                                        <option value="1">Trayecto I</option>
-                                        <option value="2">Trayecto II</option>
-                                        <option value="3" selected>Trayecto III</option>
-                                        <option value="4">Trayecto IV</option>
+                                    <select name="trayecto" id="profile-trayecto" class="form-input">
+                                        <?php if ($user_course < 1 || $user_course > 4) echo '<option value="" selected disabled>Selecciona tu Trayecto</option>'; ?>
+                                        <option value="1" <?php if ($user_course == 1) echo "selected"; ?>>Trayecto I</option>
+                                        <option value="2" <?php if ($user_course == 2) echo "selected"; ?>>Trayecto II</option>
+                                        <option value="3" <?php if ($user_course == 3) echo "selected"; ?>>Trayecto III</option>
+                                        <option value="4" <?php if ($user_course == 4) echo "selected"; ?>>Trayecto IV</option>
                                     </select>
+                                    <span class="input-error" id="errTrayecto"></span>
                                 </div>
                                 <button type="submit" class="button">Guardar Cambios</button>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <h3>Seguridad de la Cuenta</h3>
-                            <p>Gestiona las configuraciones de seguridad de tu cuenta.</p>
-                            <a href="#" class="button" style="background-color: var(--color-gray-600);">Gestionar 2FA</a>
-                            <a href="#" class="button" style="background-color: var(--color-gray-600); margin-top: 15px;">Historial de Sesiones</a>
-                        </div>
-                        <div class="card">
-                            <h3>Cambiar Contraseña</h3>
-                            <p>Mantén tu cuenta segura actualizando tu contraseña regularmente.</p>
-                            <form style="margin-top: 20px;">
-                                <div style="margin-bottom: 15px;">
-                                    <label for="current-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Contraseña Actual</label>
-                                    <input type="password" id="current-password" class="form-input">
-                                </div>
-                                <div style="margin-bottom: 15px;">
-                                    <label for="new-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Nueva Contraseña</label>
-                                    <input type="password" id="new-password" class="form-input">
-                                </div>
-                                <div style="margin-bottom: 20px;">
-                                    <label for="confirm-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Confirmar Nueva Contraseña</label>
-                                    <input type="password" id="confirm-password" class="form-input">
-                                </div>
-                                <button type="submit" class="button">Actualizar Contraseña</button>
                             </form>
+                        </div>
+                        <div class="profile-right-column">
+                            <div class="card">
+                                <h3>Seguridad de la Cuenta</h3>
+                                <p>Gestiona las configuraciones de seguridad de tu cuenta.</p>
+                                <a href="#" class="button" style="background-color: var(--color-gray-600); margin-top: 15px;">Historial de Sesiones</a>
+                            </div>
+                            <div class="card">
+                                <h3>Cambiar Contraseña</h3>
+                                <p>Mantén tu cuenta segura actualizando tu contraseña regularmente.</p>
+                                <form style="margin-top: 20px;">
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="current-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Contraseña Actual</label>
+                                        <input type="password" id="current-password" class="form-input">
+                                    </div>
+                                    <div style="margin-bottom: 15px;">
+                                        <label for="new-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Nueva Contraseña</label>
+                                        <input type="password" id="new-password" class="form-input">
+                                    </div>
+                                    <div style="margin-bottom: 20px;">
+                                        <label for="confirm-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Confirmar Nueva Contraseña</label>
+                                        <input type="password" id="confirm-password" class="form-input">
+                                    </div>
+                                    <button type="submit" class="button">Actualizar Contraseña</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -280,5 +315,17 @@ $user_course = $currentUser['trayecto'];
             </div>
         </main>
     </div>
+    <!-- Loader -->
+    <div id="loader-overlay" class="loader-overlay">
+        <div class="loader-spinner"></div>
+    </div>
+    <!-- Modal para mensajes de éxito/error -->
+    <div id="message-modal" class="message-modal">
+        <div class="message-content">
+            <span id="close-modal-btn" class="close-btn">&times;</span>
+            <p id="message-text"></p>
+        </div>
+    </div>
 </body>
+
 </html>
