@@ -197,18 +197,30 @@ switch ($user_course) {
                             <div class="card">
                                 <h3>Cambiar Contraseña</h3>
                                 <p>Mantén tu cuenta segura actualizando tu contraseña regularmente.</p>
-                                <form style="margin-top: 20px;">
+                                <form id="form-password-update" style="margin-top: 20px;">
                                     <div style="margin-bottom: 15px;">
                                         <label for="current-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Contraseña Actual</label>
-                                        <input type="password" id="current-password" class="form-input">
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="current-password" name="current_password" class="form-input">
+                                            <i class="fas fa-eye toggle-password" data-target="current-password"></i>
+                                        </div>
+                                        <span class="error-message" id="errCurrentPassword" style="color: var(--color-red); font-size: 0.85em; margin-top: 5px; display: block;"></span>
                                     </div>
                                     <div style="margin-bottom: 15px;">
                                         <label for="new-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Nueva Contraseña</label>
-                                        <input type="password" id="new-password" class="form-input">
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="new-password" name="new_password" class="form-input">
+                                            <i class="fas fa-eye toggle-password" data-target="new-password"></i>
+                                        </div>
+                                        <span class="error-message" id="errNewPassword" style="color: var(--color-red); font-size: 0.85em; margin-top: 5px; display: block;"></span>
                                     </div>
                                     <div style="margin-bottom: 20px;">
                                         <label for="confirm-password" style="display: block; margin-bottom: 5px; font-size: 14px; color: var(--color-medium-text);">Confirmar Nueva Contraseña</label>
-                                        <input type="password" id="confirm-password" class="form-input">
+                                        <div class="password-input-wrapper">
+                                            <input type="password" id="confirm-password" name="confirm_password" class="form-input">
+                                            <i class="fas fa-eye toggle-password" data-target="confirm-password"></i>
+                                        </div>
+                                        <span class="error-message" id="errConfirmPassword" style="color: var(--color-red); font-size: 0.85em; margin-top: 5px; display: block;"></span>
                                     </div>
                                     <button type="submit" class="button">Actualizar Contraseña</button>
                                 </form>

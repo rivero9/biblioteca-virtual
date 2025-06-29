@@ -638,6 +638,13 @@ section {
   align-items: center;
   gap: 0.5rem;
   height: 100%;
+  max-width: 120px;
+}
+
+.user-trigger span {
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .user-trigger:hover {

@@ -404,6 +404,33 @@ body {
   margin-top: 5px;
 }
 
+/* Estilos para el contenedor del input de contraseña y el icono */
+.password-input-wrapper {
+  position: relative; /* Para posicionar el icono absolutamente dentro */
+  width: 100%;
+}
+
+/* Ajuste al input dentro del wrapper para dejar espacio al icono */
+.password-input-wrapper .form-input {
+  padding-right: 40px; /* Deja espacio para el icono */
+}
+
+/* Estilos para el icono de alternar visibilidad */
+.toggle-password {
+  position: absolute;
+  right: 15px; /* Posición desde la derecha */
+  top: 50%; /* Centrado verticalmente */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--color-light-text); /* Color sutil */
+  font-size: 1.1em;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--color-medium-text); /* Oscurecer al pasar el ratón */
+}
+
 /* Estilos para la tabla de historial de descargas */
 .downloads-table {
   width: 100%;
