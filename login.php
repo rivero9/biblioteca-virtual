@@ -1,3 +1,8 @@
+<?php 
+
+require __DIR__ . '/config/init.php';
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -9,44 +14,6 @@
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/form.css">
     <script src="js/login.js" defer></script>
-    <style>
-        /* flash message */
-        .flash-message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .flash-message {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .flash-message .fa-icon {
-            font-size: 1.2em;
-        }
-
-        .flash-message .close-btn {
-            margin-left: auto;
-            cursor: pointer;
-            font-size: 1.5em;
-            line-height: 1;
-            background: none;
-            border: none;
-            color: inherit;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
-
-        .flash-message .close-btn:hover {
-            opacity: 1;
-        }
-    </style>
 </head>
 
 <body>
@@ -55,7 +22,7 @@
 
     <div class="container">
         <div class="login-container">
-            <div class="info-section">        
+            <div class="info-section">
                 <span class="ico"><i class="fas fa-book-open"></i></span>
                 <h1>Rápido, Eficiente y Productivo</h1>
                 <p>¡Bienvenido de nuevo! Inicia sesión para continuar tu acceso a la Biblioteca Virtual. Tus recursos te esperan, listos para tu estudio y consulta.</p>
@@ -65,18 +32,34 @@
                 <p class="subtitle">Ingresa tus credenciales para acceder a tu cuenta.</p>
 
                 <?php
-                // Verifica si hay un mensaje flash en la sesión
+                // Mostrar mensajes flash de sesión
                 if (isset($_SESSION['flash_message'])) {
-                    $message = htmlspecialchars($_SESSION['flash_message']);
+                    $message_data = $_SESSION['flash_message'];
+                    $type = htmlspecialchars($message_data['type']);
+                    $message = htmlspecialchars($message_data['message']);
+                    $icon_class = '';
+
+                    switch ($type) {
+                        case 'success':
+                            $icon_class = 'fas fa-check-circle';
+                            break;
+                        case 'error':
+                            $icon_class = 'fas fa-times-circle';
+                            break;
+                        case 'warning':
+                            $icon_class = 'fas fa-exclamation-triangle';
+                            break;
+                        default:
+                            $icon_class = 'fas fa-info-circle';
+                    }
                 ?>
-                    <div class="flash-message" id="flashMessage">
-                        <i class="fas fa-check-circle fa-icon"></i>
+                    <div class="flash-message <?php echo $type; ?>" id="flashMessage">
+                        <i class="<?php echo $icon_class; ?> fa-icon"></i>
                         <span><?php echo $message; ?></span>
                         <button class="close-btn" onclick="document.getElementById('flashMessage').style.display='none';">&times;</button>
                     </div>
                 <?php
-                    // Una vez que el mensaje se ha mostrado, elimínalo de la sesión para que no se muestre de nuevo
-                    unset($_SESSION['flash_message']);
+                    unset($_SESSION['flash_message']); // Elimina el mensaje después de mostrarlo
                 }
                 ?>
                 <form action="" method="POST" autocomplete="off" id="form">

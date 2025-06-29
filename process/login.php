@@ -54,8 +54,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user && $user["clave"]) {
             if (password_verify($password, $user["clave"])) {
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['nombre'];
+                // ¡Autenticación exitosa!
+                session_regenerate_id(true); // ¡Paso CRUCIAL! Genera un nuevo ID de sesión
+
+                $_SESSION['user_id'] = $user['id']; // Guarda el ID del usuario en la sesión
+                $_SESSION['user_name'] = $user['nombre']; // Guarda el nombre para mostrarlo
+                $_SESSION['user_agent'] = $_SERVER['HTTP_USER_AGENT']; // Guarda el User Agent del navegador
+
+                // Opcional: También puedes guardar el tiempo del último acceso para control de inactividad
+                // $_SESSION['last_activity'] = time();
+
             } else array_push($errs, ["main", "Correo o contraseña incorrectos."]);
         } else array_push($errs, ["main", "Correo o contraseña incorrectos."]);
 

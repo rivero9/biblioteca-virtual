@@ -193,59 +193,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $show_reset_form && $user_id !== nu
             margin-top: 5px;
             display: block;
         }
-
-        /* Flash message styles (colocar en tu style.css principal) */
-        .flash-message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-sizing: border-box;
-        }
-        .flash-message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        .flash-message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        .flash-message.warning {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-        .flash-message .fa-icon {
-            font-size: 1.2em;
-        }
-        .flash-message .close-btn {
-            margin-left: auto;
-            cursor: pointer;
-            font-size: 1.5em;
-            line-height: 1;
-            background: none;
-            border: none;
-            color: inherit;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
-        .flash-message .close-btn:hover {
-            opacity: 1;
-        }
     </style>
 </head>
 <body>
-    <!-- header inlcuido -->
+    <!-- header  -->
     <?php include __DIR__ . "/includes/header.php" ?>
     <div class="reset-container">
         <h2>Establecer Nueva Contraseña</h2>
         <p>Por favor, introduce tu nueva contraseña.</p>
-
         <?php
         // Mostrar mensajes de error de validación del formulario de nueva contraseña
         if (!empty($errors)) {
@@ -307,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $show_reset_form && $user_id !== nu
 
         <a href="login.php" class="back-to-login">Volver al inicio de sesión</a>
     </div>
-    <!-- footer inlcuido -->
+    <!-- footer  -->
     <?php include __DIR__ . "/includes/footer.php" ?>
 </body>
 </html>

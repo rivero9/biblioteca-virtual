@@ -16,7 +16,7 @@ require __DIR__ . "/config/init.php";
     <script src="js/main.js" defer></script>
 </head>
 <body class="app-body">
-    <!-- header inlcuido -->
+    <!-- header  -->
     <?php include __DIR__ . "/includes/header.php" ?>
     <!-- Contenido Principal -->
     <main class="main-content">
@@ -152,7 +152,7 @@ require __DIR__ . "/config/init.php";
         </section>
     </main>
 
-    <!-- footer inlcuido -->
+    <!-- footer  -->
     <?php include __DIR__ . "/includes/footer.php" ?>
 
     <!-- Modal de Detalles del Libro -->

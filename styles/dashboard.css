@@ -1,0 +1,606 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background-light);
+  display: flex;
+  min-height: 100vh;
+  color: var(--color-dark-text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased; /* Suavizado de fuentes para WebKit */
+  -moz-osx-font-smoothing: grayscale; /* Suavizado de fuentes para Firefox */
+}
+
+.dashboard-container {
+  display: flex; /* Contenedor principal con flex para la barra lateral y el contenido */
+  width: 100%;
+  height: 100vh; /* Ocupa el 100% de la altura de la vista */
+}
+
+/* --- Estilos para la Barra Lateral (Sidebar) --- */
+.sidebar {
+  width: 280px; /* Ancho fijo como en la imagen */
+  background-color: var(--color-white);
+  box-shadow: var(--shadow-sidebar); /* Sombra suave y larga a la derecha */
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Permite scroll si el contenido es largo */
+  flex-shrink: 0; /* Evita que se encoja en pantallas grandes */
+  position: relative; /* Para el Nestora logo */
+}
+
+.sidebar-header {
+  padding: 0 30px;
+  margin-bottom: 30px;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-dark-text);
+  text-decoration: none;
+}
+
+.sidebar-logo i {
+  font-size: 28px;
+  margin-right: 12px;
+  color: var(--color-primary-blue); /* Color del icono de la casita (Nestora) */
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 8px; /* Espacio entre los elementos de navegación */
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: 12px 25px; /* Ajustado para el padding de la imagen */
+  color: var(--color-medium-text);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: var(--border-radius-md); /* Redondeo de los elementos */
+  margin: 0 20px; /* Margen a los lados para el efecto flotante del active */
+}
+
+.sidebar-nav a i {
+  margin-right: 15px;
+  font-size: 1.1em;
+  color: var(--color-light-text); /* Color de ícono por defecto */
+}
+
+.sidebar-nav a:hover {
+  background-color: var(
+    --color-background-light
+  ); /* Fondo suave al pasar el ratón */
+  color: var(--color-dark-text);
+}
+
+.sidebar-nav a:hover i {
+  color: var(--color-dark-text);
+}
+
+.sidebar-nav a.active {
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  box-shadow: var(--shadow-sm); /* Sombra sutil para el estado activo */
+}
+
+.sidebar-nav a.active i {
+  color: var(--color-white);
+}
+
+/* Separadores en la barra lateral */
+.sidebar-nav .separator {
+  border-top: 1px solid var(--color-border-light);
+  margin: 20px 20px;
+}
+
+/* --- Estilos para el Contenido Principal (Main Content) --- */
+.main {
+  flex-grow: 1; /* Ocupa todo el espacio restante */
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-light);
+  overflow-y: auto; /* Permite scroll en el contenido principal */
+}
+
+/* --- Estilos para la Barra Superior (Navbar) --- */
+.navbar {
+  background-color: var(
+    --color-background-light
+  ); /* Para que se fusione con el fondo del main */
+  padding: 25px 35px; /* Padding ajustado como en la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-light); /* Borde inferior sutil */
+  flex-shrink: 0;
+  position: sticky; /* Navbar sticky al tope */
+  top: 0;
+  z-index: 999; /* Asegura que esté por encima del contenido */
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  flex-grow: 1; /* Permite que el search bar se expanda si es necesario */
+}
+
+.navbar-title {
+  font-size: 28px; /* Título principal de la sección, como en la imagen */
+  font-weight: 700;
+  color: var(--color-dark-text);
+  margin-right: 30px; /* Espacio entre título y búsqueda */
+  white-space: nowrap; /* Evita que el título se rompa */
+}
+
+.search-bar {
+  position: relative;
+  flex-grow: 1; /* Permite que la barra de búsqueda ocupe el espacio */
+  max-width: 400px; /* Limita el ancho de la barra de búsqueda */
+}
+
+.search-bar input {
+  padding: 12px 20px 12px 50px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-white);
+  color: var(--color-dark-text);
+  font-size: 15px;
+  width: 100%; /* Ocupa el 100% del max-width */
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm); /* Sombra sutil */
+  outline: none; /* Eliminar outline al enfocar */
+
+}
+
+.search-bar input::placeholder {
+  color: var(--color-light-text);
+}
+
+.search-bar input:focus {
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Sombra de foco azul */
+}
+
+.search-bar i {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-light-text);
+  font-size: 1.1em;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  margin-left: 30px; /* Espacio entre search bar y nav-right */
+}
+
+.navbar-icon-group {
+  display: flex;
+  gap: 20px; /* Espacio entre los íconos */
+  margin-right: 20px;
+}
+
+.navbar-icon {
+  font-size: 1.3em;
+  color: var(--color-medium-text);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.navbar-icon:hover {
+  color: var(--color-primary-blue);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding: 5px; /* Área de click generosa */
+  border-radius: var(--border-radius-full);
+  transition: background-color 0.2s ease;
+}
+
+.user-profile:hover {
+  background-color: var(
+    --color-border-light
+  ); /* Fondo suave al pasar el ratón */
+}
+
+.user-profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-light-text); /* Placeholder */
+  object-fit: cover;
+  border: 2px solid var(--color-white); /* Borde blanco alrededor del avatar */
+}
+
+.user-profile-name {
+  margin-left: 10px;
+  font-weight: 500;
+  color: var(--color-dark-text);
+  font-size: 15px;
+  white-space: nowrap; /* Evita que el nombre se rompa */
+}
+
+.user-profile i {
+  /* Flecha para indicar dropdown */
+  margin-left: 8px;
+  font-size: 0.9em;
+  color: var(--color-light-text);
+  transition: transform 0.2s ease;
+}
+
+/* --- Contenido de las Secciones Dinámicas (.content-area) --- */
+.content-area {
+  padding: 30px 35px; /* Padding general para el contenido */
+  flex-grow: 1;
+  overflow-y: auto; /* Permite scroll dentro del área de contenido */
+}
+
+.content-section {
+  display: none; /* Oculto por defecto, se mostrará con JS */
+}
+
+.content-section.active {
+  display: block; /* La sección activa se muestra */
+}
+
+.content-section h2 {
+  /* Título de la sección dentro del contenido */
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark-text);
+  margin-bottom: 25px;
+}
+
+/* Estilos para las tarjetas de contenido (.card-grid y .card) */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(280px, 1fr)
+  ); /* Columnas fluidas, ancho mínimo ajustado */
+  gap: 25px; /* Espacio entre tarjetas */
+  align-items: start; /* Asegura que las tarjetas se alineen en la parte superior */
+}
+
+.card {
+  background-color: var(--color-white);
+  border-radius: var(
+    --border-radius-xl
+  ); /* Bordes muy redondeados para las tarjetas */
+  box-shadow: var(--shadow-card); /* Sombra distintiva para tarjetas */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-dark-text);
+  margin-bottom: 15px;
+}
+
+.card p {
+  color: var(--color-medium-text);
+  line-height: 1.6;
+}
+
+.card .metric-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(
+    --color-dark-text
+  ); /* Color de texto oscuro para valores principales */
+  margin-bottom: 5px;
+  white-space: nowrap; /* Evita que el número se rompa */
+}
+
+.card .metric-description {
+  font-size: 14px;
+  color: var(--color-light-text);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.card .metric-description.increase {
+  color: var(--color-green); /* Verde para incremento */
+}
+.card .metric-description.decrease {
+  color: var(--color-red); /* Rojo para decremento */
+}
+.card .metric-description i {
+  font-size: 0.9em;
+}
+
+.card-chart-placeholder {
+  width: 100%;
+  height: 90px; /* Altura para el placeholder del gráfico */
+  background-color: var(--color-chart-fill); /* Color de fondo del gráfico */
+  border-radius: var(--border-radius-md);
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary-blue);
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.8; /* Ligeramente transparente como en la imagen */
+}
+
+.card-image-container {
+  width: 100%;
+  height: 150px; /* Altura fija para la imagen de la propiedad */
+  background-color: var(--color-background-light); /* Placeholder */
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card .button {
+  background-color: var(--color-primary-blue);
+  color: var(--color-white);
+  padding: 10px 20px;
+  border-radius: var(--border-radius-md);
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 20px;
+  display: inline-block;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.card .button:hover {
+  background-color: #316cd8; /* Un poco más oscuro */
+  box-shadow: var(--shadow-md);
+}
+
+/* Estilos específicos para formularios dentro de tarjetas */
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--border-radius-md);
+  font-size: 15px;
+  color: var(--color-dark-text);
+  box-sizing: border-box; /* Incluye padding y borde en el ancho total */
+}
+.form-input:focus {
+  border-color: var(--color-primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Estilos para la tabla de historial de descargas */
+.downloads-table {
+  width: 100%;
+  border-collapse: separate; /* Permite border-radius en las celdas/filas */
+  border-spacing: 0;
+  margin-top: 20px;
+  background-color: var(
+    --color-white
+  ); /* Fondo de la tabla dentro de la tarjeta */
+  border-radius: var(--border-radius-md); /* Redondeo de la tabla */
+  overflow: hidden; /* Asegura que el redondeo sea visible */
+  box-shadow: var(--shadow-sm); /* Sombra para la tabla */
+}
+
+.downloads-table thead tr {
+  background-color: var(--color-white);
+  color: var(--color-medium-text);
+  font-size: 14px;
+  text-align: left;
+}
+
+.downloads-table th {
+  padding: 15px 20px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.downloads-table tbody tr {
+  background-color: var(--color-white);
+  transition: background-color 0.2s ease;
+}
+
+.downloads-table tbody tr:hover {
+  background-color: var(--color-background-light);
+}
+
+.downloads-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-dark-text);
+  font-size: 15px;
+}
+
+.downloads-table tbody tr:last-child td {
+  border-bottom: none; /* No border en la última fila */
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 924px) {
+  .dashboard-container {
+    flex-direction: column; /* Apila sidebar y contenido */
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 15px 0;
+    box-shadow: var(--shadow-md); /* Sombra inferior para móvil */
+    border-bottom: 1px solid var(--color-border-light);
+    flex-direction: row; /* Elementos del sidebar en fila */
+    justify-content: space-around;
+    overflow-x: auto; /* Permite scroll horizontal */
+    -webkit-overflow-scrolling: touch; /* Suaviza el scroll en iOS */
+    position: sticky; /* Sidebar sticky en móvil */
+    top: 0;
+    z-index: 1000;
+    border-radius: 0;
+  }
+
+  .sidebar-header {
+    display: none; /* Oculta el logo en mobile sidebar */
+  }
+
+  .sidebar-nav ul {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .sidebar-nav li {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .sidebar-nav a {
+    flex-direction: column; /* Icono encima del texto */
+    padding: 8px 10px;
+    font-size: 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+
+  .sidebar-nav a i {
+    margin-right: 0;
+    margin-bottom: 5px;
+    font-size: 1.4em;
+  }
+
+  .main {
+    padding-top: 0;
+  }
+
+  .navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap; /* Permite que los elementos se envuelvan */
+    justify-content: center;
+    text-align: center;
+    gap: 15px; /* Espacio entre elementos cuando se envuelven */
+  }
+  .navbar-left,
+  .navbar-right {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+  .search-bar {
+    margin-left: 0;
+    width: 100%;
+    max-width: 400px;
+  }
+  .search-bar input {
+    width: 100%;
+  }
+
+  .navbar-icon-group {
+    margin-right: 15px;
+    gap: 15px;
+  }
+
+  .content-area {
+    padding: 20px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-icon-group {
+    gap: 10px;
+  }
+  .user-profile-name {
+    display: none; /* Ocultar nombre en pantallas muy pequeñas */
+  }
+  .user-profile i {
+    display: none; /* Ocultar flecha en pantallas muy pequeñas */
+  }
+  .sidebar-nav a {
+    padding: 5px 8px; /* Reducir aún más el padding en móviles pequeños */
+  }
+  .card {
+    padding: 20px;
+  }
+  .downloads-table th,
+  .downloads-table td {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
+
+
+
+/* --- Estilos para Scrollbar Personalizado (WebKit) --- */
+/* Aplica a los elementos con overflow que puedan tener scrollbars */
+.sidebar::-webkit-scrollbar,
+.main::-webkit-scrollbar,
+.content-area::-webkit-scrollbar {
+    width: 8px; /* Ancho del scrollbar vertical */
+    height: 8px; /* Altura del scrollbar horizontal (si aplica) */
+}
+
+/* Track (el fondo de la barra de desplazamiento) */
+.sidebar::-webkit-scrollbar-track,
+.main::-webkit-scrollbar-track,
+.content-area::-webkit-scrollbar-track {
+    background: var(--color-background-light); /* Fondo que se mezcla con el del dashboard */
+    border-radius: 10px; /* Bordes redondeados para el track */
+}
+
+/* Thumb (la barra de desplazamiento que se mueve) */
+.sidebar::-webkit-scrollbar-thumb,
+.main::-webkit-scrollbar-thumb,
+.content-area::-webkit-scrollbar-thumb {
+    background: var(--color-primary-blue); /* Color del pulgar, tu azul principal */
+    border-radius: 10px; /* Bordes redondeados para el pulgar */
+    /* AÑADIDO/MODIFICADO: Un borde sutil para que el redondeo sea más evidente */
+    border: 2px solid var(--color-background-light); /* Un borde que se fusione con el track, haciendo el redondeo visible */
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover,
+.main::-webkit-scrollbar-thumb:hover,
+.content-area::-webkit-scrollbar-thumb:hover {
+    background: #316cd8; /* Un tono un poco más oscuro al pasar el mouse */
+}
+
+/* --- Estilos para Scrollbar Personalizado (Firefox) --- */
+/* Aplica a los elementos con overflow que puedan tener scrollbars */
+.sidebar,
+.main,
+.content-area {
+    scrollbar-width: thin; /* 'auto' | 'thin' | 'none' */
+    scrollbar-color: var(--color-primary-blue) var(--color-background-light); /* color_thumb color_track */
+}

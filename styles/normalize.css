@@ -356,45 +356,82 @@ template {
 /* user edit */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+/*
+* VARIABLES CSS GLOBALES 
+*/
 :root {
+  /* Paleta de Colores de Marca y Generales (de tu normalize.css original) */
   --color-primary-dark: #2a5a8e; /* Azul oscuro principal - UPT Aragua */
   --color-accent-green: #1abc9c; /* Verde acento - Para resaltar acciones */
-  --color-white: #fff; /* Blanco puro - Para fondos y texto claro */
-  --color-background-light: #eee; /* Gris muy claro - Fondo general de la página */
-  --color-text: #111827; /* Definido dos veces, puedes mantenerlo una vez al final o aquí */
+  --color-white: #fff; /* Blanco puro - Para fondos y texto claro (Consistente) */
 
+  /* Colores Específicos del Dashboard (priorizados para el diseño de la imagen) */
+  --color-primary-blue: #3b82f6; /* Azul brillante para acentos y estados activos del Dashboard */
+  --color-dark-text: #1f2937; /* Texto principal muy oscuro (como en el dashboard) */
+  --color-medium-text: #4b5563; /* Texto secundario, descripciones (como en el dashboard) */
+  --color-light-text: #9ca3af; /* Texto muy sutil, placeholders, iconos inactivos (como en el dashboard) */
+  --color-background-light: #f4f7fc; /* Fondo general del dashboard y áreas de scroll (Valor del dashboard) */
+  --color-border-light: #e5e7eb; /* Bordes y separadores sutiles (como en el dashboard) */
+  --color-chart-fill: #e0f2fe; /* Color de relleno para gráficos (azul muy claro del dashboard) */
+  --color-red: #ef4444; /* Rojo para indicadores de disminución (consistente) */
+  --color-green: #22c55e; /* Verde para indicadores de aumento (consistente) */
 
-  /* Colores adicionales para detalles y sombreados */
-  --color-blue-500: #3B82F6;
+  /* Escala de Azules (para botones y otros elementos de degradado/color) */
+  --color-blue-500: #3b82f6;
   --color-blue-600: #2563eb;
   --color-blue-700: #1d4ed8;
   --color-blue-800: #1e40af;
   --color-blue-900: #1e3a8a;
+
+  /* Escala de Verdes (para botones y otros elementos de degradado/color) */
+  --color-green-500: #2ecc71;
+  --color-green-600: #1abc9c;
+  --color-green-700: #15803d;
+  --color-green-800: #106631;
+
+  /* Escala de Indigo */
   --color-indigo-700: #4338ca;
   --color-indigo-800: #3730a3;
   --color-indigo-900: #312e81;
 
-  --color-green-500: #2ECC71;
-  --color-green-600: #1abc9c; /* ¡CORREGIDA Y AÑADIDA! Igual que --color-accent-green */
-  --color-green-700: #15803d;
-  --color-green-800: #106631; /* ¡AÑADIDA! Un tono más oscuro para el efecto 'active' */
-
+  /* Escala de Púrpuras */
   --color-purple-600: #9333ea;
   --color-purple-700: #7e22ce;
+
+  /* Escala de Grises (existentes en tu normalize.css y complementados) */
   --color-gray-50: #f9fafb;
-  --color-gray-200: #e5e7eb;
+  --color-gray-200: #e5e7eb; /* Similar a --color-border-light, pero para uso general */
   --color-gray-300: #d1d5db;
   --color-gray-400: #9ca3af;
   --color-gray-600: #4b5563;
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
+  --color-text: #111827;
 
-  /* Variables para las sombras de los botones */
-  --shadow-btn-initial: 0 10px 25px rgba(0, 0, 0, 0.2);
-  --shadow-btn-hover: 0 15px 30px rgba(0, 0, 0, 0.3);
-  --shadow-btn-active: 0 4px 10px rgba(0, 0, 0, 0.15);
-  --shadow-sm-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --shadow-md-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+  /* Sombras (Combinación de botones y dashboard) */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Sombra pequeña para dashboard */
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    /* Sombra media general */ 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    /* Sombra grande general */ 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0px 8px 20px rgba(0, 0, 0, 0.08); /* Sombra específica para tarjetas del dashboard */
+  --shadow-sidebar: 0 10px 30px rgba(0, 0, 0, 0.07); /* Sombra suave y larga para sidebar */
+
+  --shadow-btn-initial: 0 10px 25px rgba(0, 0, 0, 0.2); /* Sombra inicial pronunciada para botones de acción */
+  --shadow-btn-hover: 0 15px 30px rgba(0, 0, 0, 0.3); /* Sombra de hover para botones de acción */
+  --shadow-btn-active: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra de active para botones de acción */
+  --shadow-sm-light: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    /* Sombra sutil para botones de encabezado */ 0 1px 2px 0
+      rgba(0, 0, 0, 0.06);
+  --shadow-md-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    /* Sombra media sutil para botones de encabezado */ 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+
+  /* Radios de borde */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-xl: 16px; /* Para tarjetas grandes del dashboard */
+  --border-radius-full: 9999px; /* Círculo perfecto */
 }
 
 /*Estilos globales para el body de la aplicación */
@@ -402,13 +439,16 @@ template {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-family: "Poppins", sans-serif;
   background-color: var(--color-background-light);
   line-height: 1.5;
   color: var(--color-gray-800);
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
 }
 
 /* Contenedor principal para centrar el contenido */
@@ -472,6 +512,7 @@ template {
 .auth-buttons-nav {
   gap: 15px;
   display: flex;
+  align-items: center;
 }
 
 .btn-auth {
@@ -572,16 +613,20 @@ section {
 }
 
 /* Estilos para el menú desplegable del usuario */
-.user-dropdown {
+.user {
   position: relative;
   display: inline-block; /* Permite que el contenedor se ajuste al contenido */
 }
 
-.user-dropdown-trigger {
-  background-color: var(--color-blue-600);
+.user-trigger {
+  background: linear-gradient(
+    135deg,
+    var(--color-green),
+    var(--color-green-600)
+  );
   color: var(--color-white);
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  padding: 5px 6px 5px 12px;
+  border-radius: 20px;
   font-weight: 500;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   transition: all 180ms ease-in-out;
@@ -595,74 +640,22 @@ section {
   height: 100%;
 }
 
-.user-dropdown-trigger:hover {
-  background-color: var(--color-blue-700);
+.user-trigger:hover {
+  background-color: var(--color-green-500);
   transform: scale(1.05);
 }
 
-.user-dropdown-trigger .user-icon {
-  font-size: 1.1rem;
+.user-trigger .user-icon {
+  font-size: 30px;
 }
 
-.user-dropdown-trigger .arrow-icon {
+.user-trigger .arrow-icon {
   font-size: 0.8rem;
   transition: transform 0.3s ease;
 }
 
-.user-dropdown-trigger.active .arrow-icon {
+.user-trigger.active .arrow-icon {
   transform: rotate(180deg);
-}
-
-.dropdown-menu {
-  display: none; /* Oculto por defecto */
-  position: absolute;
-  background-color: var(--color-white);
-  min-width: 160px;
-  width: 110%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  border-radius: 0.5rem;
-  padding: 0.5rem 0;
-  top: calc(100% + 0.5rem); /* Debajo del botón */
-  right: 0; /* Alineado a la derecha del botón */
-  list-style: none; /* Quita los puntos de la lista */
-  margin: 0;
-}
-
-.dropdown-menu.active {
-  display: block; /* Muestra el menú cuando está activo */
-}
-
-.dropdown-menu-item {
-  color: var(--color-gray-800);
-  padding: 10px 15px;
-  text-decoration: none;
-  display: block;
-  font-size: 0.95rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.dropdown-menu-item:hover {
-  background-color: var(--color-gray-100);
-  color: var(--color-primary-dark);
-}
-
-.dropdown-menu-item.user-info {
-  font-weight: 600;
-  color: var(--color-primary-dark);
-  cursor: default; /* No es un enlace clicable si solo muestra info */
-  border-bottom: 1px solid var(--color-gray-200);
-  margin-bottom: 0.5rem;
-}
-
-.dropdown-menu-item.user-info:hover {
-  background-color: transparent; /* No cambia de color al pasar el mouse */
-}
-
-.dropdown-separator {
-  height: 1px;
-  background-color: var(--color-gray-200);
-  margin: 0.5rem 0;
 }
 
 /* Estilos para el pie de página */
@@ -688,4 +681,48 @@ section {
 .footer-subtext {
   font-size: 0.75rem;
   color: var(--color-gray-400);
+}
+
+/* --- Flash message styles --- */
+.flash-message {
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+}
+.flash-message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.flash-message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+.flash-message.warning {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+.flash-message .fa-icon {
+  font-size: 1.2em;
+}
+.flash-message .close-btn {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 1.5em;
+  line-height: 1;
+  background: none;
+  border: none;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+.flash-message .close-btn:hover {
+  opacity: 1;
 }
