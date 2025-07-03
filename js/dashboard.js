@@ -30,7 +30,7 @@ sidebarLinks.forEach((link) => {
   });
 });
 
-updateActiveSection("profile"); // Establecer la sección inicial a 'profile' para las pruebas
+updateActiveSection("overview");
 
 // --- Funciones de Loader ---
 const loaderOverlay = document.getElementById("loader-overlay");

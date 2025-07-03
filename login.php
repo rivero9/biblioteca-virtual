@@ -71,9 +71,9 @@ require __DIR__ . '/config/init.php';
                     <div class="form-group password-field-wrapper">
                         <label for="password">Contraseña</label>
                         <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" class="input" require>
-                        <span class="toggle-password" id="togglePassword">
+                        <button type="button" class="toggle-password" id="togglePassword">
                             <i class="fas fa-eye"></i>
-                        </span>
+                        </button>
                         <span id="errPass" class="input-error"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Iniciar Sesion</button>

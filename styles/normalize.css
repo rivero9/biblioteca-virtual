@@ -733,3 +733,82 @@ section {
 .flash-message .close-btn:hover {
   opacity: 1;
 }
+
+
+
+/* -- Loader -- */
+/* Estilos para el Overlay del Loader */
+.loader-overlay {
+  position: fixed; /* Fijo en la ventana de visualización */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+  display: flex; /* Para centrar el spinner */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Asegura que esté por encima de todo lo demás */
+  visibility: hidden; /* Oculto por defecto */
+  opacity: 0; /* Oculto por defecto */
+  transition: visibility 0s, opacity 0.3s linear; /* Transición suave */
+}
+
+.loader-overlay.active {
+  visibility: visible; /* Visible cuando está activo */
+  opacity: 1; /* Totalmente visible cuando está activo */
+}
+
+/* Estilos para el Spinner (animación de carga) */
+.loader-spinner {
+  border: 6px solid var(--color-gray-200); /* Color base del spinner */
+  border-top: 6px solid var(--color-blue-600); /* Color de la parte animada */
+  border-radius: 50%; /* Forma circular */
+  width: 50px; /* Tamaño del spinner */
+  height: 50px;
+  animation: spin 1s linear infinite; /* Animación de rotación */
+}
+
+/* Definición de la animación de giro */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+/* --- Estilos para Loader Overlay --- */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente oscuro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Asegura que esté por encima de todo */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.loader-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3; /* Light grey */
+  border-top: 4px solid var(--color-primary-blue); /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -289,15 +289,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Si no hay errores, se puede proceder a registrar el usuario (aquí solo mostramos un mensaje)
     if (count($errs) == 0) {
-        session_start();
-
         $pass = password_hash($password, PASSWORD_DEFAULT);
         $sql = $con->prepare("INSERT INTO usuarios (nombre, telefono, correo, cedula, pnf, trayecto, clave, fecha_registro) VALUES (?,?,?,?,?,?,?,now())");
 
         // si hay un error al insertar en la tabla, enviar un mensaje de error
         // en caso de que todo salga bien, no enviar ningun mensaje dde error, el js lo tomara como registro exitoso
         if (!$sql->execute([$name, $tel, $email, $cedula, $pnf, $course, $pass])) array_push($errs, ["main", "EL registro no a sido completado debido a un error."]);
-        else $_SESSION['flash_message'] = "¡Registro exitoso!";
+        else $_SESSION['flash_message'] = ['type' => 'success', 'message' => '¡Registro exitoso!'];
 
         // Es una buena práctica limpiar los campos después de un registro exitoso
         $name = $tel = $email = $cedula = $pnf = $course = $password = "";

@@ -16,6 +16,7 @@ $user_email = $currentUser['correo'];
 $user_tel = $currentUser['telefono'];
 $user_pnf = $currentUser['pnf'];
 $user_course = $currentUser['trayecto'];
+$user_role = $currentUser['rol'];
 
 // --- Validar que el pnf en la DB sea válido
 $validPnf = false;
@@ -83,10 +84,6 @@ switch ($user_course) {
         <main class="main">
             <!-- Barra Superior (Navbar) -->
             <header class="navbar">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Buscar en la Biblioteca...">
-                </div>
                 <div class="navbar-right">
                     <div class="navbar-icon-group">
                         <i class="fas fa-bell navbar-icon"></i>
@@ -104,6 +101,16 @@ switch ($user_course) {
                 <section id="overview" class="content-section active">
                     <h2>Overview</h2>
                     <div class="card-grid">
+                        <!-- Botón para el panel de administración si el usuario es admin -->
+                        <?php if ($user_role === 'admin'): ?>
+                        <div class="card" style="grid-column: span 1 / auto; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                            <h3>Acceso de Administrador</h3>
+                            <p>Gestiona la biblioteca con herramientas avanzadas.</p>
+                            <a href="admin_dashboard.php" class="button" style="background-color: var(--color-primary-blue); margin-top: 20px;">
+                                <i class="fas fa-user-shield" style="margin-right: 8px;"></i> Ir al Panel Admin
+                            </a>
+                        </div>
+                        <?php endif; ?>
                         <div class="card">
                             <h3>Total Descargas</h3>
                             <div class="metric-value">1245</div>

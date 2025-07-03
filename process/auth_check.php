@@ -1,11 +1,6 @@
 <?php
-// process/auth_check.php
 
-// Este archivo asume que 'init.php' (para session_start()) y
-// que la variable $con (conexión PDO a la DB) ya ha sido definida
-// en el ámbito local del archivo que incluye auth_check.php (ej. update_user_data.php).
-
-// Comprobar si la sesión ya ha sido iniciada por init.php
+// Comprobar si la sesión ya ha sido iniciada
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -52,7 +47,7 @@ try {
             } else {
                 // --- 3. Cargar los datos completos del usuario desde la DB ---
                 // Los datos del usuario actual se hacen disponibles en el ámbito del script que incluye auth_check.php
-                $sqlUser = $con->prepare("SELECT id, nombre, telefono, correo, cedula, pnf, trayecto FROM usuarios WHERE id = :user_id LIMIT 1");
+                $sqlUser = $con->prepare("SELECT id, nombre, telefono, correo, cedula, pnf, trayecto, rol FROM usuarios WHERE id = :user_id LIMIT 1");
                 $sqlUser->bindParam(':user_id', $user_id, PDO::PARAM_INT);
                 $sqlUser->execute();
                 $currentUser = $sqlUser->fetch(PDO::FETCH_ASSOC);

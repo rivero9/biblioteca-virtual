@@ -1,0 +1,885 @@
+/* --- Contenedor Principal del Dashboard Admin (Similar al de usuario) --- */
+.admin-dashboard-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* --- Sidebar del Administrador (Adaptado al estilo de tu sidebar normal) --- */
+.admin-sidebar {
+  width: 280px;
+  background-color: var(
+    --color-white
+  ); /* Usando la variable de normalize.css */
+  box-shadow: var(--shadow-sidebar); /* Usando la variable de normalize.css */
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.admin-sidebar-header {
+  padding: 0 30px;
+  margin-bottom: 30px;
+}
+
+.admin-sidebar-logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  text-decoration: none;
+}
+
+.admin-sidebar-logo i {
+  font-size: 28px;
+  margin-right: 12px;
+  color: var(--color-primary-blue); /* Usando la variable de normalize.css */
+}
+
+.admin-sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-sidebar-nav li {
+  margin-bottom: 8px;
+}
+
+.admin-sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: 12px 25px;
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border-radius: var(
+    --border-radius-md
+  ); /* Usando la variable de normalize.css */
+  margin: 0 20px;
+}
+
+.admin-sidebar-nav a i {
+  margin-right: 15px;
+  font-size: 1.1em;
+  color: var(--color-light-text); /* Usando la variable de normalize.css */
+}
+
+.admin-sidebar-nav a:hover {
+  background-color: var(
+    --color-background-light
+  ); /* Usando la variable de normalize.css */
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+}
+
+.admin-sidebar-nav a:hover i {
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+}
+
+.admin-sidebar-nav a.active {
+  background-color: var(
+    --color-primary-blue
+  ); /* Usando la variable de normalize.css */
+  color: var(--color-white); /* Usando la variable de normalize.css */
+  box-shadow: var(--shadow-sm); /* Usando la variable de normalize.css */
+}
+
+.admin-sidebar-nav a.active i {
+  color: var(--color-white); /* Usando la variable de normalize.css */
+}
+
+.admin-separator {
+  border-top: 1px solid var(--color-border-light); /* Usando la variable de normalize.css */
+  margin: 20px 20px;
+}
+
+/* --- Contenido Principal del Administrador (Similar al de usuario) --- */
+.admin-main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(
+    --color-background-light
+  ); /* Usando la variable de normalize.css */
+  overflow-y: auto;
+}
+
+/* --- Barra Superior del Administrador (Navbar - Adaptado al estilo de tu navbar normal) --- */
+.admin-navbar {
+  background-color: var(
+    --color-background-light
+  ); /* Usando la variable de normalize.css */
+  padding: 25px 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-border-light); /* Usando la variable de normalize.css */
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.admin-navbar-left {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.admin-navbar-section-title {
+  font-family: var(--font-inter); /* Usando la variable de normalize.css */
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  margin: 0;
+  white-space: nowrap;
+}
+
+.admin-navbar-right {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  gap: 20px;
+}
+
+.admin-navbar-icon-group {
+  display: flex;
+  gap: 20px;
+  margin-right: 20px;
+}
+
+.admin-icon {
+  font-size: 1.3em;
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.admin-icon:hover {
+  color: var(--color-primary-blue); /* Usando la variable de normalize.css */
+}
+
+.admin-user-profile {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 5px;
+  border-radius: var(
+    --border-radius-full
+  ); /* Usando la variable de normalize.css */
+  transition: background-color 0.2s ease;
+}
+
+.admin-user-profile:hover {
+  background-color: var(
+    --color-border-light
+  ); /* Usando la variable de normalize.css */
+}
+
+.admin-profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.admin-profile-name {
+  margin-left: 0px;
+  font-weight: 500;
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+/* --- Área de Contenido Dinámico (Similar al de usuario) --- */
+.admin-content-area {
+  padding: 30px 35px;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.admin-content-section {
+  display: none;
+}
+
+.admin-content-section.active {
+  display: block;
+}
+
+.admin-content-section h2 {
+  font-family: var(--font-inter); /* Usando la variable de normalize.css */
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  margin-bottom: 25px;
+}
+
+/* --- Estilos para las Tarjetas (.admin-card) (Adaptado a tu estilo de tarjeta) --- */
+.admin-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+
+.admin-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+.admin-card {
+  background-color: var(
+    --color-white
+  ); /* Usando la variable de normalize.css */
+  border-radius: var(
+    --border-radius-xl
+  ); /* Usando la variable de normalize.css */
+  box-shadow: var(--shadow-card); /* Usando la variable de normalize.css */
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+}
+.admin-card:hover {
+  transform: translateY(-3px);
+}
+
+.admin-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  margin: 0;
+}
+.admin-card p {
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+  line-height: 1.6;
+}
+
+/* Tarjetas de Resumen General (adaptado) */
+.admin-summary-card {
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.admin-summary-icon {
+  font-size: 2.5em;
+  color: var(--color-primary-blue); /* Usando la variable de normalize.css */
+  padding: 0;
+  border-radius: 0;
+}
+
+.admin-summary-title {
+  font-size: 14px;
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+  margin: 0;
+}
+
+.admin-summary-value {
+  font-family: var(--font-inter); /* Usando la variable de normalize.css */
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  margin: 0;
+}
+
+.admin-summary-trend {
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: var(
+    --border-radius-md
+  ); /* Usando la variable de normalize.css */
+}
+.admin-summary-trend i {
+  font-size: 0.9em;
+}
+
+.admin-summary-trend.increase {
+  color: var(--color-green); /* Usando la variable de normalize.css */
+  background-color: rgba(
+    34,
+    197,
+    94,
+    0.1
+  ); /* Usando el color RGB de --color-green */
+}
+
+.admin-summary-trend.decrease {
+  color: var(--color-red); /* Usando la variable de normalize.css */
+  background-color: rgba(
+    239,
+    68,
+    68,
+    0.1
+  ); /* Usando el color RGB de --color-red */
+}
+
+/* Placeholder para gráficos (igual que tu dashboard) */
+.chart-placeholder {
+  width: 100%;
+  height: 150px;
+  background-color: var(
+    --color-background-light
+  ); /* Usando la variable de normalize.css */
+  border-radius: var(
+    --border-radius-md
+  ); /* Usando la variable de normalize.css */
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-primary-blue); /* Usando la variable de normalize.css */
+  font-weight: 600;
+  font-size: 14px;
+  opacity: 0.8;
+}
+.admin-chart-card {
+  min-height: 250px;
+}
+
+/* Tablas de datos en admin dashboard (adaptado a tu estilo de tabla) */
+.admin-card.users-container {
+  width: max-content;
+}
+.admin-data-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 20px;
+  background-color: var(
+    --color-white
+  ); /* Usando la variable de normalize.css */
+  border-radius: var(
+    --border-radius-md
+  ); /* Usando la variable de normalize.css */
+  overflow: hidden;
+  box-shadow: var(--shadow-sm); /* Usando la variable de normalize.css */
+}
+.admin-data-table thead tr {
+  background-color: var(
+    --color-white
+  ); /* Usando la variable de normalize.css */
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+  font-size: 14px;
+  text-align: left;
+}
+.admin-data-table th,
+.admin-data-table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--color-border-light); /* Usando la variable de normalize.css */
+}
+.admin-data-table th {
+  font-weight: 600;
+}
+.admin-data-table td {
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+  font-size: 15px;
+}
+.admin-data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+.admin-data-table .status {
+  padding: 10px 10px;
+  border-radius: var(--border-radius-md);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  margin: 3px 0;
+  display: block;
+}
+.admin-data-table .status.active {
+  background-color: rgba(
+    34,
+    197,
+    94,
+    0.1
+  ); /* Usando el color RGB de --color-green */
+  color: var(--color-green); /* Usando la variable de normalize.css */
+}
+.admin-data-table .status.paused {
+  background-color: rgba(
+    255,
+    193,
+    7,
+    0.1
+  ); /* Usando el color RGB de --color-orange */
+  color: var(--color-orange); /* Usando la variable de normalize.css */
+}
+.admin-data-table .status.canceled {
+  background-color: rgba(
+    239,
+    68,
+    68,
+    0.1
+  ); /* Usando el color RGB de --color-red */
+  color: var(--color-red); /* Usando la variable de normalize.css */
+}
+.admin-data-table td i {
+  cursor: pointer;
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+  margin-right: 8px;
+  transition: color 0.2s ease;
+}
+.admin-data-table td i:hover {
+  color: var(--color-primary-blue); /* Usando la variable de normalize.css */
+}
+
+
+/* truncar texto de las tablas */
+/* Reglas para manejar el desbordamiento de texto en celdas de tabla */
+.admin-data-table td.truncate-text {
+    white-space: nowrap; /* Evita que el texto se envuelva a la siguiente línea */
+    overflow: hidden;    /* Oculta cualquier contenido que desborde el contenedor */
+    text-overflow: ellipsis; /* Muestra los puntos suspensivos (...) para el texto oculto */
+}
+
+/* Anchos específicos para las columnas con truncado de texto */
+/* Es crucial definir un ancho máximo para que 'text-overflow: ellipsis' funcione */
+.admin-data-table th:nth-child(2), /* Columna de Título */
+.admin-data-table td:nth-child(2) {
+    max-width: 250px; /* Ajusta este valor según el ancho deseado para los títulos */
+    /* Puedes probar con diferentes valores (ej. 180px, 200px, 250px) */
+}
+
+.admin-data-table th:nth-child(3), /* Columna de Autor */
+.admin-data-table td:nth-child(3) {
+    max-width: 150px; /* Ajusta este valor para los autores si también quieres truncarlos */
+}
+
+.admin-data-table tbody tr td:nth-child(3) {
+  max-width: 120px;
+  text-wrap: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botones (reutilizando tu estilo de botón) */
+.button {
+  background-color: var(
+    --color-primary-blue
+  ); /* Usando la variable de normalize.css */
+  color: var(--color-white); /* Usando la variable de normalize.css */
+  padding: 10px 20px;
+  border-radius: var(
+    --border-radius-md
+  ); /* Usando la variable de normalize.css */
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-block;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm); /* Usando la variable de normalize.css */
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+.button:hover {
+  background-color: var(
+    --color-blue-600
+  ); /* Usando la variable de normalize.css */
+  box-shadow: var(--shadow-md); /* Usando la variable de normalize.css */
+}
+
+.button-secondary {
+  background-color: var(
+    --color-background-light
+  ); /* Usando la variable de normalize.css */
+  color: var(--color-primary-blue); /* Usando la variable de normalize.css */
+  border: 1px solid var(--color-primary-blue); /* Usando la variable de normalize.css */
+  box-shadow: none;
+}
+.button-secondary:hover {
+  background-color: var(
+    --color-primary-blue
+  ); /* Usando la variable de normalize.css */
+  color: var(--color-white); /* Usando la variable de normalize.css */
+  box-shadow: var(--shadow-sm); /* Usando la variable de normalize.css */
+}
+
+/* Responsive Adjustments (adaptado a tus media queries) */
+@media (max-width: 924px) {
+  .admin-dashboard-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .admin-sidebar {
+    width: 100%;
+    height: auto;
+    padding: 15px 0;
+    box-shadow: var(--shadow-md); /* Usando la variable de normalize.css */
+    border-bottom: 1px solid var(--color-border-light); /* Usando la variable de normalize.css */
+    flex-direction: row;
+    justify-content: space-around;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-radius: 0;
+  }
+  .admin-sidebar-header {
+    display: none;
+  }
+  .admin-sidebar-nav ul {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .admin-sidebar-nav li {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+  .admin-sidebar-nav a {
+    flex-direction: column;
+    padding: 8px 10px;
+    font-size: 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+  }
+  .admin-sidebar-nav a i {
+    margin-right: 0;
+    margin-bottom: 5px;
+    font-size: 1.4em;
+  }
+
+  .admin-main-content {
+    margin: 0;
+  }
+  .admin-navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    gap: 15px;
+  }
+  .admin-navbar-left,
+  .admin-navbar-right {
+    width: 100%;
+    justify-content: center;
+    margin-left: 0;
+  }
+  .admin-navbar-section-title {
+    font-size: 20px;
+  }
+  .admin-navbar-user-profile {
+    padding: 5px 10px;
+  }
+  .admin-profile-name {
+    display: none;
+  }
+  .admin-content-area {
+    padding: 20px;
+  }
+  .admin-card-grid,
+  .admin-charts-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-data-table th,
+  .admin-data-table td {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-navbar-icon-group {
+    gap: 10px;
+  }
+  .admin-sidebar-nav a {
+    padding: 5px 8px;
+  }
+  .admin-card {
+    padding: 20px;
+  }
+}
+
+/* --- Estilos para Scrollbar Personalizado (WebKit) --- */
+.admin-sidebar::-webkit-scrollbar,
+.admin-main-content::-webkit-scrollbar,
+.admin-content-area::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.admin-sidebar::-webkit-scrollbar-track,
+.admin-main-content::-webkit-scrollbar-track,
+.admin-content-area::-webkit-scrollbar-track {
+  background: var(
+    --color-background-light
+  ); /* Usando la variable de normalize.css */
+  border-radius: 10px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb,
+.admin-main-content::-webkit-scrollbar-thumb,
+.admin-content-area::-webkit-scrollbar-thumb {
+  background: var(
+    --color-primary-blue
+  ); /* Usando la variable de normalize.css */
+  border-radius: 10px;
+  border: 2px solid var(--color-background-light); /* Usando la variable de normalize.css */
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb:hover,
+.admin-main-content::-webkit-scrollbar-thumb:hover,
+.admin-content-area::-webkit-scrollbar-thumb:hover {
+  background: var(--color-blue-600); /* Usando la variable de normalize.css */
+}
+
+/* --- Estilos para Scrollbar Personalizado (Firefox) --- */
+.admin-sidebar,
+.admin-main-content,
+.admin-content-area {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-blue) var(--color-background-light); /* Usando la variable de normalize.css */
+}
+
+/* --- Modal de Mensajes (reutilizados del dashboard principal) --- */
+
+.message-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+}
+
+.message-content {
+  background-color: var(
+    --color-white
+  ); /* Usando la variable de normalize.css */
+  padding: 25px 30px;
+  border-radius: var(
+    --border-radius-lg
+  ); /* Usando la variable de normalize.css */
+  box-shadow: var(--shadow-md); /* Usando la variable de normalize.css */
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.message-content.success {
+  border: 2px solid var(--color-green); /* Usando la variable de normalize.css */
+  color: var(--color-green); /* Usando la variable de normalize.css */
+}
+
+.message-content.error {
+  border: 2px solid var(--color-red); /* Usando la variable de normalize.css */
+  color: var(--color-red); /* Usando la variable de normalize.css */
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  color: var(--color-light-text); /* Usando la variable de normalize.css */
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: var(--color-dark-text); /* Usando la variable de normalize.css */
+}
+
+/* Estilo para inputs con error */
+.form-input.input-invalid {
+  border-color: var(
+    --color-red
+  ) !important; /* Usando la variable de normalize.css */
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important; /* Usando el color RGB de --color-red */
+}
+
+/* Estilos para el contenedor del input de contraseña y el icono (si lo usarás en admin forms) */
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+}
+.password-input-wrapper .form-input {
+  padding-right: 40px;
+}
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: var(--color-light-text); /* Usando la variable de normalize.css */
+  font-size: 1.1em;
+  transition: color 0.2s ease;
+}
+.toggle-password:hover {
+  color: var(--color-medium-text); /* Usando la variable de normalize.css */
+}
+
+/* --- Nuevas reglas para el layout del Dashboard (Overview) --- */
+/* Esta regla reemplaza la necesidad de .admin-card-grid y .admin-charts-grid en el overview */
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Cuatro columnas de igual ancho */
+  gap: 25px;
+  align-items: start;
+  margin-bottom: 30px;
+}
+
+/* Las tarjetas de gráficos y la tabla ocuparán dos columnas */
+.admin-overview-grid .admin-chart-card,
+.admin-overview-grid .admin-table-card {
+  grid-column: span 2;
+}
+
+/* --- Nuevas reglas para la Gestión de Recursos --- */
+.admin-section-actions {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-end; /* Alinea el botón a la derecha */
+}
+
+/* Miniaturas de portada en la tabla de recursos */
+.resource-cover-thumbnail {
+  width: 40px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Botones de acción (editar/eliminar) en las tablas */
+.action-btn {
+  background: none;
+  border: none;
+  color: var(--color-medium-text);
+  font-size: 1.1em;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: color 0.2s ease;
+}
+.action-btn:hover {
+  color: var(--color-primary-blue);
+}
+.action-btn.delete-resource-btn:hover {
+  color: var(--color-red);
+}
+
+/* Contenedor responsivo para tablas */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* Ancho mínimo para la tabla de recursos */
+#resources-table {
+  min-width: 900px; /* Ajusta según el contenido de las columnas */
+}
+
+/* Estilos para el modal de edición */
+.admin-modal-content {
+  max-width: 600px;
+  text-align: left;
+}
+.admin-modal-content h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.admin-modal-content .form-label {
+  margin-top: 10px;
+}
+.admin-modal-content .button {
+  width: 100%;
+  margin-top: 25px;
+}
+
+/* Estilos para etiquetas de formulario */
+.form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: var(--color-medium-text);
+  font-weight: 500;
+}
+
+/* Estilos para inputs de formulario */
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--border-radius-md);
+  font-size: 15px;
+  color: var(--color-dark-text);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-input:focus {
+  border-color: var(--color-primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* Estilos específicos para input type="file" */
+.form-input-file {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--border-radius-md);
+  font-size: 15px;
+  color: var(--color-dark-text);
+  box-sizing: border-box;
+  background-color: var(--color-white);
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-input-file:focus {
+  border-color: var(--color-primary-blue);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+.form-input-file::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.form-input-file::before {
+  content: "Seleccionar archivo";
+  display: inline-block;
+  background: var(--color-primary-blue);
+  color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  padding: 8px 15px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.form-input-file:hover::before {
+  background-color: var(--color-blue-600);
+  box-shadow: var(--shadow-sm);
+}
+.form-input-file:active::before {
+  background-color: var(--color-blue-700);
+}
+
+/* Estilos para los mensajes de error bajo los campos del formulario */
+.error-message {
+  color: var(--color-red);
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+}
