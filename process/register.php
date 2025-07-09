@@ -217,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($cedula)) {
         array_push($errs, ["cedula", "La cédula es obligatoria."]);
     } else {
-        $email = limpiar_datos($_POST["cedula"]);
+        $cedula = limpiar_datos($_POST["cedula"]);
 
         // Remover cualquier caracter no numérico (V-, E-, etc.) para almacenar solo los dígitos
         $cedula_clean = preg_replace('/[^0-9]/', '', $cedula);
