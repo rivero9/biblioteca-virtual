@@ -452,7 +452,6 @@
 .admin-data-table th:nth-child(2), /* Columna de Título */
 .admin-data-table td:nth-child(2) {
     max-width: 250px; /* Ajusta este valor según el ancho deseado para los títulos */
-    /* Puedes probar con diferentes valores (ej. 180px, 200px, 250px) */
 }
 
 .admin-data-table th:nth-child(3), /* Columna de Autor */
@@ -783,16 +782,30 @@
 .table-responsive {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
 }
+
+.table-responsive:active {
+  cursor: grabbing;
+}
+
 /* Ancho mínimo para la tabla de recursos */
 #resources-table {
   min-width: 900px; /* Ajusta según el contenido de las columnas */
 }
 
 /* Estilos para el modal de edición */
+#edit-resource-modal {
+  overflow: auto;
+  padding: 50px;
+  box-sizing: border-box;
+  z-index: 1000;
+}
 .admin-modal-content {
   max-width: 600px;
   text-align: left;
+  margin: auto;
 }
 .admin-modal-content h3 {
   text-align: center;
@@ -882,4 +895,100 @@
   font-size: 12px;
   margin-top: 5px;
   display: block;
+}
+
+/* --- Estilos para los campos de Autor Dinámicos --- */
+.author-input-group {
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    padding: 15px;
+    padding-top: 45px;
+    margin-bottom: 20px; /* Espacio entre grupos de autor */
+    background-color: var(--color-background-light);
+    position: relative; /* Para el botón de eliminar */
+}
+
+.author-input-group .form-input {
+    margin-bottom: 10px; /* Espacio entre inputs dentro del grupo */
+}
+
+.author-input-group .form-input:last-of-type {
+    margin-bottom: 0; /* Eliminar margen inferior del último input */
+}
+
+/* Estilo para el botón de eliminar autor dentro del grupo */
+.button-remove-author {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border-radius: var(--border-radius-sm);
+    box-shadow: none;
+    border: none;
+    margin: 0 !important;
+    width: max-content !important;
+}
+
+.button-remove-author:hover {
+    background-color: #d92727;
+}
+
+/* Estilos para los campos de redes sociales */
+.social-media-inputs {
+    margin-top: 10px;
+    margin-bottom: 10px; /* Espacio debajo del grupo de redes sociales */
+}
+
+.social-input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-bottom: 5px; /* Espacio entre cada red social */
+}
+
+.social-input-group:last-of-type {
+    margin-bottom: 0; /* Eliminar margen inferior del último grupo de red social */
+}
+
+.social-input-group:focus-within {
+    border-color: var(--color-primary-blue);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    outline: none;
+}
+
+.social-input-group .social-icon {
+    padding: 10px 12px;
+    background-color: var(--color-background-light);
+    color: var(--color-medium-text);
+    font-size: 1.2em;
+    border-right: 1px solid var(--color-border-light);
+    flex-shrink: 0;
+}
+
+.social-input-group .form-input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    margin-bottom: 0; /* Anular margen del form-input base */
+}
+
+.social-input-group .form-input:focus {
+    border-color: transparent;
+    box-shadow: none;
+    outline: none;
+}
+
+/* Estilos para la previsualización de video */
+#current-video-preview video {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
+    margin-top: 10px;
 }

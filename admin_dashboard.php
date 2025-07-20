@@ -1,13 +1,8 @@
 <?php
-// admin_dashboard.php
 
-// 1. Incluir el archivo de inicialización general (session_start(), BASE_URL).
 require_once __DIR__ . "/config/init.php";
-
-// 2. Incluir el archivo de conexión a la base de datos.
 require_once __DIR__ . "/config/connection_db.php";
 
-// 3. Conectar a la base de datos.
 try {
     $db = new Database();
     $con = $db->connect();
@@ -20,12 +15,8 @@ try {
     exit();
 }
 
+require_once __DIR__ . "/process/auth_check_admin.php";
 
-// 4. Incluir el archivo de verificación de autenticación para ADMINISTRADORES.
-require_once __DIR__ . "/process/auth_check_admin.php"; // Usar el archivo específico de admin
-
-// Si el script llega aquí, el usuario es un administrador y puede ver el panel.
-// Los datos del administrador están en $currentUser.
 $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
 ?>
 <!DOCTYPE html>
@@ -34,9 +25,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración - Biblioteca UPTA</title>
-    <!-- Incluye Font Awesome para los íconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Fuentes Inter y Poppins de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/normalize.css">
     <link rel="stylesheet" href="styles/admin_dashboard.css">
@@ -55,7 +44,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                     <li><a href="./"><i class="fas fa-home"></i> Inicio</a></li>
                     <li><a href="#" data-section="overview" class="active"><i class="fas fa-th-large"></i> Dashboard</a></li>
                     <li><a href="#" data-section="users"><i class="fas fa-users"></i> Gestión Usuarios</a></li>
-                    <li><a href="#" data-section="books"><i class="fas fa-book"></i> Gestión Libros</a></li>
+                    <li><a href="#" data-section="books"><i class="fas fa-book"></i> Gestión Recursos</a></li>
                     <li><a href="#" data-section="add-resource"><i class="fas fa-plus-circle"></i> Añadir Recurso</a></li>
                     <li><a href="#" data-section="categories"><i class="fas fa-tags"></i> Categorías</a></li>
                     <li><a href="#" data-section="requests"><i class="fas fa-paper-plane"></i> Solicitudes</a></li>
@@ -90,7 +79,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
             <!-- Área de Contenido Dinámico -->
             <div class="admin-content-area">
                 <section id="overview" class="admin-content-section active">
-                    <h2>Resumen General</h2> <!-- H2 para el título de la sección -->
+                    <h2>Resumen General</h2>
                     <div class="admin-card-grid">
                         <!-- Tarjetas de Resumen -->
                         <div class="admin-card admin-summary-card">
@@ -101,7 +90,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                         </div>
                         <div class="admin-card admin-summary-card">
                             <i class="fas fa-book admin-summary-icon"></i>
-                            <p class="admin-summary-title">Total Libros</p>
+                            <p class="admin-summary-title">Total Recursos</p>
                             <p class="admin-summary-value">82</p>
                             <span class="admin-summary-trend decrease"><i class="fas fa-arrow-down"></i> 5.5%</span>
                         </div>
@@ -112,7 +101,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                             <span class="admin-summary-trend increase"><i class="fas fa-arrow-up"></i> 8.5%</span>
                         </div>
                         <div class="admin-card admin-summary-card">
-                            <i class="fas fa-handshake admin-summary-icon"></i> <!-- Nuevo icono para "Solicitudes" -->
+                            <i class="fas fa-handshake admin-summary-icon"></i>
                             <p class="admin-summary-title">Solicitudes Pendientes</p>
                             <p class="admin-summary-value">164</p>
                             <span class="admin-summary-trend decrease"><i class="fas fa-arrow-down"></i> 5.5%</span>
@@ -122,8 +111,8 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                             <div class="chart-placeholder">Gráfico de barras de actividad</div>
                         </div>
                         <div class="admin-card admin-chart-card" style="grid-column: span 1;">
-                            <h3>Libros Más Populares</h3>
-                            <div class="chart-placeholder">Gráfico de libros más descargados</div>
+                            <h3>Recursos Más Populares</h3>
+                            <div class="chart-placeholder">Gráfico de recursos más descargados</div>
                         </div>
                         <div class="admin-card admin-large-card" style="grid-column: span 1;">
                             <h3>Estado General del Sistema</h3>
@@ -215,7 +204,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                     </div>
                 </section>
 
-                <!-- SECCIÓN: Gestión de Libros/Recursos -->
+                <!-- SECCIÓN: Gestión de Recursos/Recursos -->
                 <section id="books" class="admin-content-section">
                     <h2>Gestión de Recursos de la Biblioteca</h2>
                     <div class="admin-section-actions">
@@ -229,58 +218,17 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                                     <tr>
                                         <th>ID</th>
                                         <th>Título</th>
-                                        <th>Autor</th>
+                                        <th>Autor(es)</th>
                                         <th>Tipo</th>
                                         <th>Categoría</th>
                                         <th>Año</th>
                                         <th>PDF</th>
+                                        <th>Video</th>
                                         <th>Portada</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="truncate-text">Introducción a la Programación con Python</td>
-                                        <td class="truncate-text">Juan Pérez</td>
-                                        <td>Libro</td>
-                                        <td>Informática</td>
-                                        <td>2022</td>
-                                        <td><a href="uploads/resources/pdf/sample.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
-                                        <td><img src="https://placehold.co/40x60/E0F2FE/3B82F6?text=Port" alt="Portada" class="resource-cover-thumbnail"></td>
-                                        <td>
-                                            <button class="action-btn edit-resource-btn" data-id="1"><i class="fas fa-edit"></i></button>
-                                            <button class="action-btn delete-resource-btn" data-id="1"><i class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td class="truncate-text">Tesis Doctoral sobre IA en Educación</td>
-                                        <td class="truncate-text">María García</td>
-                                        <td>Tesis</td>
-                                        <td>Ciencias</td>
-                                        <td>2023</td>
-                                        <td><a href="uploads/resources/pdf/sample_thesis.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
-                                        <td><img src="https://placehold.co/40x60/E0F2FE/3B82F6?text=Tes" alt="Portada" class="resource-cover-thumbnail"></td>
-                                        <td>
-                                            <button class="action-btn edit-resource-btn" data-id="2"><i class="fas fa-edit"></i></button>
-                                            <button class="action-btn delete-resource-btn" data-id="2"><i class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td class="truncate-text">Investigación de Nuevos Materiales Compuestos para la Industria Automotriz</td>
-                                        <td class="truncate-text">Carlos Ruiz</td>
-                                        <td>Investigación</td>
-                                        <td>Mecánica</td>
-                                        <td>2024</td>
-                                        <td><a href="uploads/resources/pdf/sample_paper.pdf" target="_blank"><i class="fas fa-file-pdf"></i></a></td>
-                                        <td><img src="https://placehold.co/40x60/E0F2FE/3B82F6?text=Pap" alt="Portada" class="resource-cover-thumbnail"></td>
-                                        <td>
-                                            <button class="action-btn edit-resource-btn" data-id="3"><i class="fas fa-edit"></i></button>
-                                            <button class="action-btn delete-resource-btn" data-id="3"><i class="fas fa-trash-alt"></i></button>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -300,7 +248,9 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                                     <option value="">Seleccione un tipo...</option>
                                     <option value="Libro">Libro</option>
                                     <option value="Tesis">Tesis</option>
-                                    <option value="Investigacion">Trabajo de Investigación</option>
+                                    <option value="Proyecto">Proyecto</option>
+                                    <option value="Articulo">Artículo</option>
+                                    <option value="Otro">Otro</option>
                                 </select>
                                 <span class="error-message" id="errAddResourceType"></span>
                             </div>
@@ -309,11 +259,45 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                                 <input type="text" id="add-book-title" name="title" class="form-input">
                                 <span class="error-message" id="errAddTitle"></span>
                             </div>
-                            <div style="margin-bottom: 15px;">
-                                <label for="add-book-author" class="form-label">Autor</label>
-                                <input type="text" id="add-book-author" name="author" class="form-input">
-                                <span class="error-message" id="errAddAuthor"></span>
+
+                            <!-- Sección para Múltiples Autores -->
+                            <div  style="margin-bottom: 15px;"class="form-group">
+                                <label class="form-label">Autores del Recurso</label>
+                                <div id="author-fields-container">
+                                    <!-- Grupo inicial de campos de autor -->
+                                    <div class="author-input-group mb-10">
+                                        <input type="text" name="authors[0][name]" class="form-input author-name-input" placeholder="Nombre completo del autor" required>
+                                        <input type="hidden" name="authors[0][id_autor]" class="author-id-input">
+                                        <input type="email" name="authors[0][email_contacto_autor]" class="form-input mt-5" placeholder="Email de contacto (opcional)">
+                                        <input type="text" name="authors[0][telefono_contacto_autor]" class="form-input mt-5" placeholder="Teléfono de contacto (opcional)">
+                                        <div class="social-media-inputs mt-5">
+                                            <div class="social-input-group">
+                                                <i class="fab fa-linkedin social-icon"></i>
+                                                <input type="url" name="authors[0][social_linkedin]" class="form-input" placeholder="https://www.linkedin.com/in/usuario">
+                                            </div>
+                                            <div class="social-input-group mt-5">
+                                                <i class="fab fa-twitter social-icon"></i>
+                                                <input type="url" name="authors[0][social_twitter]" class="form-input" placeholder="https://twitter.com/usuario">
+                                            </div>
+                                            <div class="social-input-group mt-5">
+                                                <i class="fab fa-github social-icon"></i>
+                                                <input type="url" name="authors[0][social_github]" class="form-input" placeholder="https://github.com/usuario">
+                                            </div>
+                                            <div class="social-input-group mt-5">
+                                                <i class="fab fa-facebook social-icon"></i>
+                                                <input type="url" name="authors[0][social_facebook]" class="form-input" placeholder="https://www.facebook.com/usuario">
+                                            </div>
+                                        </div>
+                                        <span class="error-message" id="errAddAuthor0"></span>
+                                        <button type="button" class="button button-secondary button-remove-author mt-10" style="display: none;"><i class="fas fa-minus"></i> Eliminar Autor</button>
+                                    </div>
+                                </div>
+                                <button type="button" id="add-author-btn" class="button button-secondary mt-15">
+                                    <i class="fas fa-plus"></i> Añadir Otro Autor
+                                </button>
+                                <span class="error-message" id="errAddAuthors"></span>
                             </div>
+
                             <div style="margin-bottom: 15px;">
                                 <label for="add-book-category" class="form-label">Categoría</label>
                                 <select id="add-book-category" name="category" class="form-input">
@@ -343,6 +327,11 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                                 <label for="add-book-pdf" class="form-label">Archivo PDF del Recurso</label>
                                 <input type="file" id="add-book-pdf" name="book_pdf" class="form-input-file" accept=".pdf">
                                 <span class="error-message" id="errAddBookPdf"></span>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <label for="add-resource-video" class="form-label">Video Demo del Recurso (Opcional)</label>
+                                <input type="file" id="add-resource-video" name="resource_video" class="form-input-file" accept="video/*">
+                                <span class="error-message" id="errAddResourceVideo"></span>
                             </div>
                             <div style="margin-bottom: 20px;">
                                 <label for="add-book-cover" class="form-label">Portada del Recurso (Opcional)</label>
@@ -470,13 +459,16 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                 <input type="hidden" id="edit-resource-id" name="resource_id">
                 <input type="hidden" id="edit-current-pdf" name="current_pdf_path">
                 <input type="hidden" id="edit-current-cover" name="current_cover_path">
+                <input type="hidden" id="edit-current-video" name="current_video_path">
 
                 <div style="margin-bottom: 15px;">
                     <label for="edit-resource-type" class="form-label">Tipo de Recurso</label>
                     <select id="edit-resource-type" name="resource_type" class="form-input">
                         <option value="Libro">Libro</option>
                         <option value="Tesis">Tesis</option>
-                        <option value="Investigacion">Trabajo de Investigación</option>
+                        <option value="Proyecto">Proyecto</option>
+                        <option value="Articulo">Artículo</option>
+                        <option value="Otro">Otro</option>
                     </select>
                     <span class="error-message" id="errEditResourceType"></span>
                 </div>
@@ -485,11 +477,45 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                     <input type="text" id="edit-book-title" name="title" class="form-input">
                     <span class="error-message" id="errEditTitle"></span>
                 </div>
-                <div style="margin-bottom: 15px;">
-                    <label for="edit-book-author" class="form-label">Autor</label>
-                    <input type="text" id="edit-book-author" name="author" class="form-input">
-                    <span class="error-message" id="errEditAuthor"></span>
+
+                <!-- Sección para Múltiples Autores en Edición -->
+                <div class="form-group">
+                    <label class="form-label">Autores del Recurso</label>
+                    <div id="edit-author-fields-container">
+                        <!-- Los campos de autor se cargarán y añadirán aquí dinámicamente por JS -->
+                        <div class="author-input-group mb-10">
+                            <input type="text" name="authors[0][name]" class="form-input author-name-input" placeholder="Nombre completo del autor" required>
+                            <input type="hidden" name="authors[0][id_autor]" class="author-id-input">
+                            <input type="email" name="authors[0][email_contacto_autor]" class="form-input mt-5" placeholder="Email de contacto (opcional)">
+                            <input type="text" name="authors[0][telefono_contacto_autor]" class="form-input mt-5" placeholder="Teléfono de contacto (opcional)">
+                            <div class="social-media-inputs mt-5">
+                                <div class="social-input-group">
+                                    <i class="fab fa-linkedin social-icon"></i>
+                                    <input type="url" name="authors[0][social_linkedin]" class="form-input" placeholder="URL de LinkedIn">
+                                </div>
+                                <div class="social-input-group mt-5">
+                                    <i class="fab fa-twitter social-icon"></i>
+                                    <input type="url" name="authors[0][social_twitter]" class="form-input" placeholder="URL de Twitter/X">
+                                </div>
+                                <div class="social-input-group mt-5">
+                                    <i class="fab fa-github social-icon"></i>
+                                    <input type="url" name="authors[0][social_github]" class="form-input" placeholder="URL de GitHub">
+                                </div>
+                                <div class="social-input-group mt-5">
+                                    <i class="fab fa-facebook social-icon"></i>
+                                    <input type="url" name="authors[0][social_facebook]" class="form-input" placeholder="URL de Facebook">
+                                </div>
+                            </div>
+                            <span class="error-message" id="errEditAuthor0"></span>
+                            <button type="button" class="button button-secondary button-remove-author mt-10" style="display: none;"><i class="fas fa-minus"></i> Eliminar Autor</button>
+                        </div>
+                    </div>
+                    <button type="button" id="edit-add-author-btn" class="button button-secondary mt-15">
+                        <i class="fas fa-plus"></i> Añadir Otro Autor
+                    </button>
+                    <span class="error-message" id="errEditAuthors"></span>
                 </div>
+
                 <div style="margin-bottom: 15px;">
                     <label for="edit-book-category" class="form-label">Categoría</label>
                     <select id="edit-book-category" name="category" class="form-input">
@@ -519,6 +545,14 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                     <input type="file" id="edit-book-pdf" name="book_pdf" class="form-input-file" accept=".pdf">
                     <span class="error-message" id="errEditBookPdf"></span>
                 </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="edit-resource-video" class="form-label">Video Demo del Recurso (Dejar vacío para mantener el actual)</label>
+                    <input type="file" id="edit-resource-video" name="resource_video" class="form-input-file" accept="video/*">
+                    <span class="error-message" id="errEditResourceVideo"></span>
+                    <div id="current-video-preview" style="margin-top: 10px; text-align: center;">
+                        <p style="font-size: 13px; color: var(--color-light-text);">No hay video actual.</p>
+                    </div>
+                </div>
                 <div style="margin-bottom: 20px;">
                     <label for="edit-book-cover" class="form-label">Portada del Recurso (Dejar vacío para mantener la actual)</label>
                     <input type="file" id="edit-book-cover" name="book_cover" class="form-input-file" accept="image/*">
@@ -543,7 +577,7 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
 
     <!-- Loader Overlay -->
     <div id="loader-overlay" class="loader-overlay">
-        <div class="spinner"></div>
+        <div class="loader-spinner"></div>
     </div>
 
     <script src="js/admin_dashboard.js" defer></script>
