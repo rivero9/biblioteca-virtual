@@ -1,2 +1,4 @@
 vendor/
+# en la ruta de abajo se guardan los archivos de los recursos, ejemplo:
+# uploads/resources/pdf uploads/resources/videos y uploads/resources/covers
 uploads/resources/

@@ -208,7 +208,8 @@ function updateAdminActiveSection(targetSectionId) {
     }
     // Asegurarse de que el primer campo de autor esté visible y sin errores al ir a añadir
     if (targetSectionId === 'add-resource') {
-        resetAuthorFields(authorFieldsContainer, 'add');
+        formAddResource.reset(); // Resetear el formulario
+        resetAuthorFields(authorFieldsContainer, 'add'); // Asegurar reset de autores
         clearFormErrors(formAddResource); // Limpiar errores al cambiar de sección
     }
 
@@ -266,7 +267,11 @@ function createAuthorInputGroup(index, authorData = {}, isEdit = false) {
     const isExistingAuthor = authorData.id_autor !== undefined && authorData.id_autor !== null && authorData.id_autor !== ''; // Si tiene id_autor, es existente
 
     group.innerHTML = `
-        <input type="text" name="authors[${index}][name]" class="form-input author-name-input" placeholder="Nombre completo del autor" value="${nameValue}" ${isExistingAuthor ? 'readonly' : ''} required>
+        <div class="author-name-input-wrapper">
+            <input type="text" name="authors[${index}][name]" class="form-input author-name-input" placeholder="Nombre completo del autor" value="${nameValue}" ${isExistingAuthor ? 'readonly' : ''} autocomplete="off" required>
+            <button type="button" class="clear-author-btn" style="display: ${isExistingAuthor ? 'block' : 'none'};" title="Limpiar selección de autor"><i class="fas fa-times-circle"></i></button>
+        </div>
+        <div class="autocomplete-suggestions"></div> <!-- Contenedor para sugerencias personalizadas -->        
         <input type="hidden" name="authors[${index}][id_autor]" class="author-id-input" value="${authorData.id_autor || ''}">
         <input type="email" name="authors[${index}][email_contacto_autor]" class="form-input mt-5" placeholder="Email de contacto (opcional)" value="${authorData.email_contacto_autor || ''}" ${isExistingAuthor ? 'readonly' : ''}>
         <input type="text" name="authors[${index}][telefono_contacto_autor]" class="form-input mt-5" placeholder="Teléfono de contacto (opcional)" value="${authorData.telefono_contacto_autor || ''}" ${isExistingAuthor ? 'readonly' : ''}>
@@ -304,10 +309,191 @@ function createAuthorInputGroup(index, authorData = {}, isEdit = false) {
         });
     }
 
-    // Lógica de autocompletado (PLACEHOLDER, se implementará más tarde)
+    // --- Lógica de autocompletado personalizada ---
     const authorNameInput = group.querySelector('.author-name-input');
-    if (authorNameInput && !isExistingAuthor) {
-        // Aquí iría la lógica de autocompletado y selección
+    const authorIdInput = group.querySelector('.author-id-input');
+    const autocompleteSuggestionsContainer = group.querySelector('.autocomplete-suggestions');
+    const contactInputs = group.querySelectorAll('input[type="email"], input[type="text"][name*="telefono"], input[type="url"]');
+    const clearAuthorBtn = group.querySelector('.clear-author-btn');
+
+    let debounceTimer;
+    let activeSuggestionIndex = -1; // Para navegación con teclado
+
+    // Función para rellenar los campos del autor seleccionado
+    const selectAuthorSuggestion = (suggestionElement) => {
+        const authorId = suggestionElement.dataset.authorId;
+        const authorName = suggestionElement.textContent; // Usar textContent para el nombre completo
+
+        authorNameInput.value = authorName;
+        authorIdInput.value = authorId;
+        group.querySelector('[name$="[email_contacto_autor]"]').value = suggestionElement.dataset.authorEmail;
+        group.querySelector('[name$="[telefono_contacto_autor]"]').value = suggestionElement.dataset.authorPhone;
+        group.querySelector('[name$="[social_linkedin]"]').value = suggestionElement.dataset.authorLinkedin;
+        group.querySelector('[name$="[social_twitter]"]').value = suggestionElement.dataset.authorTwitter;
+        group.querySelector('[name$="[social_github]"]').value = suggestionElement.dataset.authorGithub;
+        group.querySelector('[name$="[social_facebook]"]').value = suggestionElement.dataset.authorFacebook;
+
+        // Hacer los campos de solo lectura
+        contactInputs.forEach(input => input.readOnly = true);
+        authorNameInput.readOnly = true;
+        
+        // Mostrar botón de limpiar
+        if (clearAuthorBtn) {
+            clearAuthorBtn.style.display = 'block';
+        }
+
+        autocompleteSuggestionsContainer.style.display = 'none'; // Ocultar sugerencias
+        activeSuggestionIndex = -1; // Resetear índice
+    };
+
+    // Función para limpiar la selección del autor
+    // shouldFocus: booleano para indicar si el input de nombre de autor debe recuperar el foco
+    const clearAuthorSelection = (shouldFocus = true) => {
+        authorNameInput.value = '';
+        authorIdInput.value = '';
+        contactInputs.forEach(input => {
+            input.value = ''; // Limpiar valor
+            input.readOnly = false; // Hacer editable
+        });
+        authorNameInput.readOnly = false;
+        autocompleteSuggestionsContainer.innerHTML = '';
+        autocompleteSuggestionsContainer.style.display = 'none';
+        activeSuggestionIndex = -1;
+        if (clearAuthorBtn) {
+            clearAuthorBtn.style.display = 'none'; // Ocultar botón de limpiar
+        }
+        if (shouldFocus) { // Solo enfocar si se le indica
+            authorNameInput.focus();
+        }
+    };
+
+    // Event listener para el botón de limpiar
+    if (clearAuthorBtn) {
+        clearAuthorBtn.addEventListener('click', () => clearAuthorSelection(true)); // Siempre enfocar al hacer clic en el botón
+    }
+
+    // Evento 'input' para buscar sugerencias
+    authorNameInput.addEventListener('input', async (e) => {
+        clearTimeout(debounceTimer);
+        const query = e.target.value.trim();
+
+        // Si el usuario empieza a escribir después de tener un autor seleccionado, limpiar la selección
+        // Pero no enfocar de nuevo, ya que el usuario ya está escribiendo
+        if (authorIdInput.value !== '' && query !== authorNameInput.value) {
+            clearAuthorSelection(false); // No enfocar al limpiar por escritura
+            authorNameInput.value = query; // Mantener lo que el usuario está escribiendo
+        }
+
+        if (query.length < 2) {
+            autocompleteSuggestionsContainer.innerHTML = '';
+            autocompleteSuggestionsContainer.style.display = 'none';
+            // No limpiar authorIdInput ni campos de contacto aquí si el usuario solo borra.
+            // La lógica de blur se encargará si el campo queda vacío y pierde el foco.
+            return;
+        }
+
+        debounceTimer = setTimeout(async () => {
+            try {
+                const response = await fetch(`process/search_authors.php?query=${encodeURIComponent(query)}`);
+                if (!response.ok) {
+                    throw new Error('Error al buscar autores.');
+                }
+                const data = await response.json();
+
+                autocompleteSuggestionsContainer.innerHTML = '';
+                if (data.success && data.authors.length > 0) {
+                    data.authors.forEach((author, idx) => {
+                        const suggestionDiv = document.createElement('div');
+                        suggestionDiv.classList.add('autocomplete-suggestion-item');
+                        suggestionDiv.textContent = `${author.nombre} ${author.apellido || ''}`.trim();
+                        // Almacenar todos los datos del autor en el dataset
+                        suggestionDiv.dataset.authorId = author.id_autor;
+                        suggestionDiv.dataset.authorEmail = author.email_contacto_autor || '';
+                        suggestionDiv.dataset.authorPhone = author.telefono_contacto_autor || '';
+                        suggestionDiv.dataset.authorLinkedin = author.social_linkedin || '';
+                        suggestionDiv.dataset.authorTwitter = author.social_twitter || '';
+                        suggestionDiv.dataset.authorGithub = author.social_github || '';
+                        suggestionDiv.dataset.authorFacebook = author.social_facebook || '';
+
+                        suggestionDiv.addEventListener('click', () => {
+                            selectAuthorSuggestion(suggestionDiv);
+                        });
+                        autocompleteSuggestionsContainer.appendChild(suggestionDiv);
+                    });
+                    autocompleteSuggestionsContainer.style.display = 'block';
+                    activeSuggestionIndex = -1; // Resetear el índice activo
+                } else {
+                    autocompleteSuggestionsContainer.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error en autocompletado de autor:', error);
+                autocompleteSuggestionsContainer.style.display = 'none';
+            }
+        }, 300);
+    });
+
+    // Evento 'keydown' para navegación con teclado
+    authorNameInput.addEventListener('keydown', (e) => {
+        const suggestions = autocompleteSuggestionsContainer.querySelectorAll('.autocomplete-suggestion-item');
+        if (suggestions.length === 0) return;
+
+        if (e.key === 'ArrowDown') {
+            e.preventDefault(); // Prevenir el scroll de la página
+            activeSuggestionIndex = (activeSuggestionIndex + 1) % suggestions.length;
+            highlightActiveSuggestion(suggestions);
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault(); // Prevenir el scroll de la página
+            activeSuggestionIndex = (activeSuggestionIndex - 1 + suggestions.length) % suggestions.length;
+            highlightActiveSuggestion(suggestions);
+        } else if (e.key === 'Enter') {
+            e.preventDefault(); // Prevenir el envío del formulario
+            if (activeSuggestionIndex > -1) {
+                selectAuthorSuggestion(suggestions[activeSuggestionIndex]);
+            }
+        } else if (e.key === 'Escape') {
+            autocompleteSuggestionsContainer.style.display = 'none';
+            activeSuggestionIndex = -1;
+        }
+    });
+
+    // Función para resaltar la sugerencia activa
+    const highlightActiveSuggestion = (suggestions) => {
+        suggestions.forEach((item, idx) => {
+            item.classList.toggle('active', idx === activeSuggestionIndex);
+            if (idx === activeSuggestionIndex) {
+                item.scrollIntoView({ block: 'nearest' });
+            }
+        });
+    };
+
+    // Ocultar sugerencias cuando el input pierde el foco (con un pequeño retraso)
+    authorNameInput.addEventListener('blur', () => {
+        setTimeout(() => {
+            // Solo ocultar si el foco no se movió a una sugerencia
+            if (!autocompleteSuggestionsContainer.contains(document.activeElement)) {
+                autocompleteSuggestionsContainer.style.display = 'none';
+                activeSuggestionIndex = -1;
+                // Eliminado: La llamada a clearAuthorSelection(false) aquí.
+                // El valor del input DEBE persistir si el usuario lo escribió manualmente
+                // y no seleccionó una sugerencia. Se tratará como un nuevo autor al enviar el formulario.
+            }
+        }, 150); // Pequeño retraso para permitir clics en las sugerencias
+    });
+
+    // Mostrar sugerencias de nuevo si el input gana el foco y hay texto
+    authorNameInput.addEventListener('focus', async (e) => {
+        const query = e.target.value.trim();
+        // Solo mostrar si el campo no está readonly (es decir, no hay un autor seleccionado)
+        if (!authorNameInput.readOnly && query.length >= 2 && autocompleteSuggestionsContainer.innerHTML !== '') {
+            autocompleteSuggestionsContainer.style.display = 'block';
+        }
+    });
+
+    // Inicializar el estado del botón de limpiar al crear el grupo de autor
+    if (isExistingAuthor && clearAuthorBtn) {
+        clearAuthorBtn.style.display = 'block';
+    } else if (clearAuthorBtn) {
+        clearAuthorBtn.style.display = 'none';
     }
 
     return group;
@@ -320,8 +506,12 @@ function createAuthorInputGroup(index, authorData = {}, isEdit = false) {
  */
 function resetAuthorFields(container, formType) {
     container.innerHTML = '';
-    const initialAuthorGroup = createAuthorInputGroup(0, {}, formType === 'edit'); // El primer autor no se puede eliminar inicialmente
+    // Al crear el primer grupo, siempre se le pasa shouldFocus = true para que enfoque el primer input
+    const initialAuthorGroup = createAuthorInputGroup(0, {}, formType === 'edit');
     container.appendChild(initialAuthorGroup);
+    // Asegurarse de que el input de nombre del primer autor esté enfocado al resetear
+    initialAuthorGroup.querySelector('.author-name-input').focus();
+
     if (formType === 'add') {
         authorIndex = 1;
     } else if (formType === 'edit') {
@@ -707,6 +897,7 @@ async function handleDeleteButtonClick(e) {
 const allTableResponsiveDivs = document.querySelectorAll('.table-responsive');
 
 if (allTableResponsiveDivs.length > 0) {
+    console.log(`Se encontraron ${allTableResponsiveDivs.length} elementos .table-responsive para drag-and-drop.`);
 
     allTableResponsiveDivs.forEach(tableResponsiveDiv => {
         let isDown = false;
@@ -718,14 +909,21 @@ if (allTableResponsiveDivs.length > 0) {
             tableResponsiveDiv.classList.add('active-drag');
             startX = e.pageX - tableResponsiveDiv.offsetLeft;
             scrollLeft = tableResponsiveDiv.scrollLeft;
+            // console.log('Mouse Down en:', tableResponsiveDiv.id || tableResponsiveDiv.className); // DEBUG
         });
 
         tableResponsiveDiv.addEventListener('mouseleave', () => {
+            if (isDown) {
+                // console.log('Mouse Leave - Drag ended en:', tableResponsiveDiv.id || tableResponsiveDiv.className); // DEBUG
+            }
             isDown = false;
             tableResponsiveDiv.classList.remove('active-drag');
         });
 
         tableResponsiveDiv.addEventListener('mouseup', () => {
+            if (isDown) {
+                // console.log('Mouse Up - Drag ended en:', tableResponsiveDiv.id || tableResponsiveDiv.className); // DEBUG
+            }
             isDown = false;
             tableResponsiveDiv.classList.remove('active-drag');
         });
@@ -744,9 +942,13 @@ if (allTableResponsiveDivs.length > 0) {
             tableResponsiveDiv.classList.add('active-drag');
             startX = e.touches[0].pageX - tableResponsiveDiv.offsetLeft;
             scrollLeft = tableResponsiveDiv.scrollLeft;
+            // console.log('Touch Start en:', tableResponsiveDiv.id || tableResponsiveDiv.className); // DEBUG
         });
 
         tableResponsiveDiv.addEventListener('touchend', () => {
+            if (isDown) {
+                // console.log('Touch End - Drag ended en:', tableResponsiveDiv.id || tableResponsiveDiv.className); // DEBUG
+            }
             isDown = false;
             tableResponsiveDiv.classList.remove('active-drag');
         });
@@ -759,4 +961,6 @@ if (allTableResponsiveDivs.length > 0) {
             tableResponsiveDiv.scrollLeft = scrollLeft - walk;
         }, { passive: false });
     });
+} else {
+    console.log('Ningún elemento .table-responsive encontrado para drag-and-drop.');
 }

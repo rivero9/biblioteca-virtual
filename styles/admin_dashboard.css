@@ -992,3 +992,103 @@
     box-shadow: var(--shadow-sm);
     margin-top: 10px;
 }
+
+/* Estilos para el contenedor del input de autor y el botón de limpiar */
+.author-name-input-wrapper {
+    position: relative;
+    display: flex; /* Para alinear el input y el botón */
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.author-name-input-wrapper .form-input {
+    flex-grow: 1; /* El input toma el espacio disponible */
+    padding-right: 40px; /* Espacio para el botón de limpiar */
+}
+
+.clear-author-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--color-light-text); /* Color del icono */
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1; /* Asegurar que el icono se centre verticalmente */
+    display: none; /* Oculto por defecto, visible solo cuando hay un autor seleccionado */
+    transition: color 0.2s ease;
+}
+
+.clear-author-btn:hover {
+    color: var(--color-red); /* Cambiar color al pasar el mouse */
+}
+
+/* Asegurar que el grupo de autor tenga posición relativa para el posicionamiento absoluto */
+.author-input-group {
+    position: relative;
+}
+
+/* Estilos para el contenedor de sugerencias de autocompletado */
+.autocomplete-suggestions {
+    position: absolute;
+    border: 1px solid var(--color-border-light);
+    background-color: var(--color-white);
+    max-height: 200px; /* Altura máxima para el scroll */
+    overflow-y: auto; /* Scroll si hay muchas sugerencias */
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    width: calc(100% - 32px); /* Ajustar al ancho del input, restando el borde */
+    box-shadow: var(--shadow-md);
+    border-radius: var(--border-radius-md);
+    display: none; /* Oculto por defecto */
+    margin-top: -9px; /* Pequeño espacio debajo del input */
+}
+
+.autocomplete-suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--color-dark-text);
+    border-bottom: 1px solid var(--color-border-light); /* Separador entre sugerencias */
+}
+
+.autocomplete-suggestion-item:last-child {
+    border-bottom: none; /* No hay borde en el último elemento */
+}
+
+.autocomplete-suggestion-item:hover,
+.autocomplete-suggestion-item.active { /* Clase 'active' para navegación con teclado */
+    background-color: var(--color-primary-blue);
+    color: var(--color-white);
+}
+
+/* Estilo para el contenedor de tabla responsive con drag-to-scroll */
+.table-responsive {
+    overflow-x: auto; /* ¡CRUCIAL para el scroll horizontal! */
+    -webkit-overflow-scrolling: touch; /* Para un scroll más suave en iOS */
+    cursor: grab; /* Cursor predeterminado para indicar que se puede arrastrar */
+}
+
+.table-responsive.active-drag {
+    cursor: grabbing; /* Cursor cuando se está arrastrando activamente */
+}
+
+/* Puedes añadir más estilos para la barra de desplazamiento si quieres personalizarla */
+/* Para navegadores basados en Webkit (Chrome, Safari) */
+.table-responsive::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: var(--color-light-bg);
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: var(--color-primary-blue-light);
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-blue);
+}

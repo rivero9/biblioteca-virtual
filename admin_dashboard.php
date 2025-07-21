@@ -247,7 +247,6 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                                 <select id="add-resource-type" name="resource_type" class="form-input">
                                     <option value="">Seleccione un tipo...</option>
                                     <option value="Libro">Libro</option>
-                                    <option value="Tesis">Tesis</option>
                                     <option value="Proyecto">Proyecto</option>
                                     <option value="Articulo">Artículo</option>
                                     <option value="Otro">Otro</option>
@@ -465,7 +464,6 @@ $displayAdminName = htmlspecialchars($currentUser['nombre'] ?? 'Administrador');
                     <label for="edit-resource-type" class="form-label">Tipo de Recurso</label>
                     <select id="edit-resource-type" name="resource_type" class="form-input">
                         <option value="Libro">Libro</option>
-                        <option value="Tesis">Tesis</option>
                         <option value="Proyecto">Proyecto</option>
                         <option value="Articulo">Artículo</option>
                         <option value="Otro">Otro</option>
